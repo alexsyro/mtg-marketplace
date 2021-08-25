@@ -38,10 +38,11 @@ const equalsDict = {
 class Text {
   static transliterate(text) {
     const transliterateText = text.split('').map((letter) => {
-      if (letter in equalsDict) {
-        return equalsDict[letter];
+      const lttr = letter.toLowerCase();
+      if (lttr in equalsDict) {
+        return equalsDict[lttr];
       }
-      return letter;
+      return lttr;
     });
     return transliterateText.join('');
   }
