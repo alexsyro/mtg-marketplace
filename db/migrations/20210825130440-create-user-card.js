@@ -1,33 +1,20 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Cards', {
+    await queryInterface.createTable('UserCards', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-      },
-      type: {
-        type: Sequelize.TEXT,
-      },
-      quality: {
-        type: Sequelize.TEXT,
-      },
-      price: {
+      cardId: {
         type: Sequelize.INTEGER,
       },
-      img: {
-        type: Sequelize.TEXT,
+      userId: {
+        type: Sequelize.INTEGER,
       },
-      is_foil: {
+      status: {
         type: Sequelize.TEXT,
-      },
-      is_foil:{
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +27,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Cards');
-  }
+    await queryInterface.dropTable('UserCards');
+  },
 };
