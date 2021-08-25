@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/registration', (req, res) => {
-  res.render('/users/registration');
-});
+  
+  res.render('users/registration');
 
 app.get('/login', (req, res) => {
   res.render('users/login');
