@@ -19,13 +19,12 @@ app.use(express.json());
 // Static
 app.use(express.static(path.join(__dirname, 'static')));
 
-
 app.get('/', (req, res) => {
   res.redirect('/cards');
 });
 
 app.get('/registration', (req, res) => {
-  res.render('/users/registration');
+  res.render('users/registration');
 });
 
 app.get('/login', (req, res) => {

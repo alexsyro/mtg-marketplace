@@ -1,0 +1,18 @@
+.banner {
+  width: 200px;
+  height: 100px;
+}
+
+#upper-header {
+  background-color: cadetblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#search-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: cadetblue;
+}
