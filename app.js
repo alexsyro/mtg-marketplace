@@ -24,6 +24,20 @@ app.get('/', (req, res) => {
   res.redirect('/cards');
 });
 
+app.get('/registration', (req, res) => {
+  res.render('/users/registration');
+});
+
+app.get('/login', (req, res) => {
+  res.render('users/login');
+});
+
+app.get('/logout', (req, res) => {
+  // destroy session
+  // clear cookie
+  res.redirect('/cards');
+});
+
 // Routes
 app.use('/cards', cardsRouter);
 app.use('/users', usersRouter);
