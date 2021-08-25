@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ User, Card }) {
-      UserCard.belongsTo(User);
-      UserCard.belongsTo(Card);
+      UserCard.belongsTo(User, { onUpdate: 'cascade', onDelete: 'cascade' });
+      UserCard.belongsTo(Card, { onUpdate: 'cascade', onDelete: 'cascade' });
     }
   }
   UserCard.init({
     cardId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'Card',
         key: 'id',
@@ -24,17 +25,26 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     },
-    userId: {
+    userNickname: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'User',
-        key: 'id',
+        key: 'nickname',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',
     },
     status: {
       type: DataTypes.TEXT,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
     },
   }, {
     sequelize,

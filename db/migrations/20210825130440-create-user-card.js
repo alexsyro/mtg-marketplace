@@ -9,9 +9,23 @@ module.exports = {
       },
       cardId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Cards',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       },
-      userId: {
-        type: Sequelize.INTEGER,
+      userNickname: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'nickname',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       },
       status: {
         type: Sequelize.TEXT,

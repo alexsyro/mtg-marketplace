@@ -10,18 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ UserCard }) {
-      User.hasMany(UserCard);
+      User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
     }
   }
   User.init({
     nickname: {
       type: DataTypes.TEXT,
+      primaryKey: true,
+      allowNull: false,
+      unique: true,
     },
     email: {
       type: DataTypes.TEXT,
     },
     password: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
     },
     city: {
       type: DataTypes.TEXT,
