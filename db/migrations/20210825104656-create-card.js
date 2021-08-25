@@ -25,6 +25,10 @@ module.exports = {
       is_foil: {
         type: Sequelize.TEXT,
       },
+      is_foil:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -37,5 +41,5 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Cards');
-  },
+  }
 };
