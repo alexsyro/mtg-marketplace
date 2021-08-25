@@ -13,12 +13,11 @@ document.addEventListener('click', async (e) => {
     document.body.innerHTML = data
   }
 
-  // if (e.target.id === 'logoutBtn') {
-  //   e.preventDefault()
-  //   const response = await fetch('/')
-  //   const data = await response.text()
-  //   document.body.innerHTML = data
-  // }
+  if (e.target.id === 'logoutBtn') {
+    e.preventDefault()
+    const response = await fetch('/logout')
+    window.location('/')
+  }
 
   // if (e.target.id === 'profileBtn') {
   //   e.preventDefault()
