@@ -20,6 +20,10 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
+      is_foil:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
