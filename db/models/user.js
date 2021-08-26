@@ -9,25 +9,27 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ UserCard }) {
-      User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
+    static associate({ Card, UserCard }) {
+      User.belongsToMany(Card, { through: UserCard });
+      // User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
     }
   }
   User.init({
-    nickname: {
+    login: {
       type: DataTypes.TEXT,
       primaryKey: true,
-      allowNull: false,
-      unique: true,
     },
     email: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     password: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     city: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     phone: {
       type: DataTypes.TEXT,

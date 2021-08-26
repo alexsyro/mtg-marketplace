@@ -8,18 +8,23 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       type: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       quality: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       price: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       img: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       isFoil: {
@@ -38,5 +43,5 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Cards');
-  }
+  },
 };

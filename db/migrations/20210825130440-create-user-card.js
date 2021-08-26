@@ -7,7 +7,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      cardId: {
+      CardId: {
+        field: 'card_id',
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -17,20 +18,23 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      userNickname: {
+      UserLogin: {
+        field: 'user_login',
         type: Sequelize.TEXT,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'nickname',
+          key: 'login',
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      cardCity: {
+      city: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       status: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       createdAt: {
