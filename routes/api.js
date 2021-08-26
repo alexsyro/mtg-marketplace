@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const { Op } = require('sequelize');
 const { User, Card, UserCard } = require('../db/models');
 
@@ -9,15 +10,26 @@ const router = Router();
 // Shows all cards on sale
 router.get('/cards', async (req, res) => {
   try {
-    const cards = await UserCard.findAll({ raw: true });
+    const products = await UserCard.findAll({ raw: true });
+    const promisesCards = await products.map(async (prod) => {
+      const card = await Card.findOne({
+        where: {
+          id: prod.CardId,
+        },
+      });
+      return card;
+    });
+    const cards = await Promise.all(promisesCards);
     res.render('cards/index', { cards, session: req.sessions });
   } catch (error) {
+    console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('cards/error', { error, message, session: req.sessions });
   }
 });
+
 // Add new card
-router.post('/cards/', async (req, res) => {
+router.post('/cards', async (req, res) => {
   const { name, type, quality, price, img, isFoil } = req.body;
   const card = {
     name,
@@ -48,10 +60,11 @@ router.post('/users/new', async (req, res) => {
   try {
     // const isUniqueLogin = await User.checkUnique('login', login);
     // const isUniqueEmail = await User.checkUnique('email', email);
+    const hashed = await bcrypt.hash(password, 10);
     const inputUser = {
       login,
       email,
-      password,
+      password: hashed,
       city,
       phone,
     };
@@ -61,12 +74,12 @@ router.post('/users/new', async (req, res) => {
       },
       defaults: inputUser,
     });
-
+    req.session = {};
     if (isNew) {
-      req.session = {};
+      console.log('SESSION', req.session);
       req.session.user = user;
       req.session.isAutorized = true;
-      res.render(`users/${user.login}`);
+      res.render('users/profile', { user });
       // cart storing in the session if exists
     } else {
       // show that user or password is not unique
@@ -75,6 +88,35 @@ router.post('/users/new', async (req, res) => {
     }
   } catch (error) {
     // req.session.isAutorized = false;
+    const message = 'Нет связи с БД, не удалось создать запись';
+    res.status(500).render('users/error', { error, message, session: req.sessions });
+  }
+});
+
+// Login
+router.post('/login', async (req, res) => {
+  const { emailLogin, password } = req.body;
+  console.log('BODY:', req.body);
+  try {
+    const user = await User.findOne({
+      where: {
+        [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
+      },
+    });
+    req.session = {};
+    if (user) {
+      const isCorrectPass = await bcrypt.compare(password, user.password);
+      console.log('is correctpass:', isCorrectPass);
+      if (isCorrectPass) {
+        req.session.isAutorized = true;
+        req.session.user = user;
+        return res.render('users/profile', { session: req.session });
+      }
+    }
+    // show that user or password is not unique
+    req.session.isAutorized = false;
+    res.json({ message: 'Логин, пароль или почта не найдены' });
+  } catch (error) {
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('users/error', { error, message, session: req.sessions });
   }

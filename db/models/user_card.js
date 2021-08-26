@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      price: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       city: {
         type: DataTypes.TEXT,
       },
@@ -56,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'UserCard',
-    },
+    }
   );
   return UserCard;
 };

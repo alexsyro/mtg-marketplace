@@ -1,9 +1,10 @@
 <div class="profile-container">
-  <h2 class="profile-name">Name</h2>
-  <p class="profile-city">City</p>
+  <h2 class="profile-name">{{user.login}}</h2>
+  <p class="profile-city">{{user.city}}</p>
 </div>
 
 <div class="profile-cards-container">
-  {{#each imgArr}}
+  {{#each cards}}
   <div class="profile-cards">this</div>
+  {{/each }}
 </div>

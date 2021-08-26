@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.redirect('/cards');
+  res.redirect('/api/cards');
 });
 
 app.get('/registration', (req, res) => {

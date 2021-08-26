@@ -5,7 +5,7 @@ const multer = require('multer');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('cards/index');
+  res.redirect('/api/cards/');
 });
 
 router.post('/new', (req, res) => {

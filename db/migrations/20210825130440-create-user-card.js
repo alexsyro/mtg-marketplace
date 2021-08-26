@@ -29,6 +29,10 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      price: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       city: {
         allowNull: false,
         type: Sequelize.TEXT,
