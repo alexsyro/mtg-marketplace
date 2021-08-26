@@ -27,8 +27,7 @@ router.get('/cards/:cardId', async (req, res) => {
       where: {
         id: cardId,
       },
-    },
-    { raw: true }
+    }
   );
   const sellers = await UserCard.findAll(
     {
@@ -36,7 +35,6 @@ router.get('/cards/:cardId', async (req, res) => {
         CardId: cardId,
       },
     },
-    { raw: true }
   );
   res.render('cards/show', { card, sellers });
 });

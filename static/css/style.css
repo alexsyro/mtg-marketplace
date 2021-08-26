@@ -1,3 +1,7 @@
+body {
+  background-color: #212121;
+}
+
 .banner {
   width: 200px;
   height: 100px;
@@ -13,7 +17,7 @@
 #search-div {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   background-color: cadetblue;
 }
 
@@ -44,17 +48,28 @@ p {
 
 .cards {
   width: 200px;
-  height: 300px
+  height: 300px;
 }
 
-#card-container{
+#card-container {
   margin: 30px;
   display: flex;
 }
 
+.card-div {
+  border-radius: 5%;
+  background-color: rgb(19, 18, 18);
+  font-weight: bolder;
+  color: white;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /*cards/display.hbs  */
 .single-card-container {
-  width: 70%;
+  width: 40%;
   height: auto;
   margin: 0 auto 3em;
   display: flex;
