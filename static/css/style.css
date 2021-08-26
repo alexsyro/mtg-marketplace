@@ -41,3 +41,13 @@ p {
 .submit-btn {
   margin-top: 1.5em;
 }
+
+.cards {
+  width: 200px;
+  height: 300px
+}
+
+#card-container{
+  margin: 30px;
+  display: flex;
+}
