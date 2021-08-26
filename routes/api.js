@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const { Op } = require('sequelize');
+const Text = require('../Tools/Text');
 const { User, Card, UserCard } = require('../db/models');
 
 const { Router } = express;
@@ -25,15 +26,23 @@ router.get('/cards', async (req, res) => {
   try {
     const products = await UserCard.findAll({ raw: true });
     const promisesCards = await products.map(async (prod) => {
-      const card = await Card.findOne({
-        where: {
-          id: prod.CardId,
+      const card = await Card.findOne(
+        {
+          where: {
+            id: prod.CardId,
+          },
         },
-      });
+        { raw: true }
+      );
       return card;
     });
     const cards = await Promise.all(promisesCards);
-    res.render('cards/index', { cards, session: req.sessions });
+    const fullProduct = products.map((prod, index) => ({
+      price: prod.price,
+      name: cards[index].name,
+      img: cards[index].img,
+    }));
+    res.render('cards/index', { fullProduct, session: req.sessions });
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
@@ -47,10 +56,9 @@ router.get('/cards/new', (req, res) => {
 
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
-  console.log('REQ::::::::::', req.file);
-  const { type, quality, isFoil } = req.body;
-  let name = 'Shit';
-  let img = `/uploads/${req.file.originalname}`;
+  console.log('app.post');
+  const { name, type, quality, isFoil } = req.body;
+  const img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
     type,
