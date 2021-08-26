@@ -15,16 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   UserCard.init({
-    cardCity: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'city',
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    },
     cardId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -44,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',
+    },
+    cardCity: {
+      type: DataTypes.TEXT,
     },
     status: {
       type: DataTypes.TEXT,

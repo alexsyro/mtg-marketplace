@@ -7,16 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      cardCity: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'city',
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-      },
       cardId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -36,6 +26,9 @@ module.exports = {
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
+      },
+      cardCity: {
+        type: Sequelize.TEXT,
       },
       status: {
         type: Sequelize.TEXT,
