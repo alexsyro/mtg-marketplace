@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ UserCard }) {
+      Card.hasMany(UserCard, { onUpdate: "cascade", onDelete: "cascade" });
     }
   }
   Card.init({
@@ -29,8 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     img: {
       type: DataTypes.TEXT,
     },
-    is_foil: {
-      type: DataTypes.TEXT,
+    isFoil: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   }, {
     sequelize,

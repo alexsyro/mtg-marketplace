@@ -22,10 +22,7 @@ module.exports = {
       img: {
         type: Sequelize.TEXT,
       },
-      is_foil: {
-        type: Sequelize.TEXT,
-      },
-      is_foil:{
+      isFoil: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
