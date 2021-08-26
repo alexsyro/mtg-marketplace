@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ Card, UserCard }) {
-      User.hasMany(Card, { through: UserCard });
+      User.belongsToMany(Card, { through: UserCard });
       // User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
     }
   }
