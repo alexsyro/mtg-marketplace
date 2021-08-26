@@ -29,7 +29,7 @@ document.addEventListener('click', async (e) => {
     window.location('/');
   }
 
-  if (e.target.id === 'addCard') {
+  if (e.target.id === 'addCardBtn') {
     const response = await fetch('/api/cards/new');
     const data = await response.text();
     document.body.innerHTML = data;
