@@ -20,6 +20,10 @@ const imageStorage = multer.diskStorage({
 });
 const upload = multer({ storage: imageStorage });
 
+router.get('/cards/new', (req, res) => {
+  res.render('cards/new');
+});
+
 router.get('/cards/:cardId', async (req, res) => {
   const { cardId } = req.params;
   const card = await Card.findOne(
@@ -27,7 +31,7 @@ router.get('/cards/:cardId', async (req, res) => {
       where: {
         id: cardId,
       },
-    }
+    },
   );
   const sellers = await UserCard.findAll(
     {
@@ -67,10 +71,6 @@ router.get('/cards', async (req, res) => {
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('cards/error', { error, message, session: req.sessions });
   }
-});
-
-router.get('/cards/new', (req, res) => {
-  res.render('cards/new');
 });
 
 // Add new card
