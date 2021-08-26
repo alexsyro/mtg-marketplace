@@ -56,7 +56,7 @@ router.get('/cards/new', (req, res) => {
 
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
-  console.log('app.post');
+  console.log(req.body);
   const { name, type, quality, isFoil } = req.body;
   const img = `/uploads/${req.file.originalname}`;
   const card = {
@@ -64,7 +64,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
     type,
     quality,
     img,
-    isFoil,
+    isFoil: isFoil || false,
   };
 
   try {
