@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/cart');
@@ -19,6 +20,11 @@ app.use(express.json());
 // Static
 app.use(express.static(path.join(__dirname, 'static')));
 
+<<<<<<< HEAD
+=======
+app.use(cookieParser());
+
+>>>>>>> b6a9bfb35415897f9fcb80a0156d0f24132ea775
 app.get('/', (req, res) => {
   res.redirect('/cards');
 });
