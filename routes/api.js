@@ -18,8 +18,28 @@ const imageStorage = multer.diskStorage({
     cb(null, `${file.originalname}`);
   },
 });
-
 const upload = multer({ storage: imageStorage });
+
+router.get('/cards/:cardId', async (req, res) => {
+  const { cardId } = req.params;
+  const card = await Card.findOne(
+    {
+      where: {
+        id: cardId,
+      },
+    },
+    { raw: true }
+  );
+  const sellers = await UserCard.findAll(
+    {
+      where: {
+        CardId: cardId,
+      },
+    },
+    { raw: true }
+  );
+  res.render('cards/show', { card, sellers });
+});
 
 // Shows all cards on sale
 router.get('/cards', async (req, res) => {
@@ -38,6 +58,7 @@ router.get('/cards', async (req, res) => {
     });
     const cards = await Promise.all(promisesCards);
     const fullProduct = products.map((prod, index) => ({
+      id: cards[index].id,
       price: prod.price,
       name: cards[index].name,
       img: cards[index].img,
