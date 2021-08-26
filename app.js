@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const multer = require('multer')
 const cookieParser = require('cookie-parser');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
@@ -23,6 +24,17 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // Cookier
 app.use(cookieParser());
+
+let imageStorage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, path.join(__dirname, 'uploads'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + path.extname(file.originalname));
+  },
+});
+
+let upload = multer({imageStorage: imageStorage});
 
 app.get('/', (req, res) => {
   res.redirect('/cards');
@@ -51,3 +63,5 @@ app.use('/api', apiRouter);
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
+
+module.exports = upload;
