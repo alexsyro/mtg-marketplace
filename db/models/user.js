@@ -17,17 +17,18 @@ module.exports = (sequelize, DataTypes) => {
     nickname: {
       type: DataTypes.TEXT,
       primaryKey: true,
-      allowNull: false,
-      unique: true,
     },
     email: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     password: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     city: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     phone: {
       type: DataTypes.TEXT,

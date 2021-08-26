@@ -9,16 +9,17 @@ module.exports = {
       nickname: {
         type: Sequelize.TEXT,
         primaryKey: true,
-        allowNull: false,
-        unique: true,
       },
       email: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       password: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       city: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       phone: {

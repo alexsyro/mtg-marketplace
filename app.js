@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/cart');
+const apiRouter = require('./routes/api');
 
 const app = express();
 
@@ -19,12 +20,9 @@ app.use(express.json());
 
 // Static
 app.use(express.static(path.join(__dirname, 'static')));
-
-<<<<<<< HEAD
-=======
+// Cookier
 app.use(cookieParser());
 
->>>>>>> b6a9bfb35415897f9fcb80a0156d0f24132ea775
 app.get('/', (req, res) => {
   res.redirect('/cards');
 });
@@ -47,6 +45,7 @@ app.get('/logout', (req, res) => {
 app.use('/cards', cardsRouter);
 app.use('/users', usersRouter);
 app.use('/cart', cartRouter);
+app.use('/api', apiRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
