@@ -10,7 +10,6 @@ document.addEventListener('click', async (e) => {
       },
       body: JSON.stringify({ userCardId }),
     });
-
     const buyingCardsNumber = await response.json();
     // console.log(buyingCardsNumber);
     const cartBtn = document.getElementById('cart');

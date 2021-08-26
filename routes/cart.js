@@ -13,7 +13,17 @@ router.put('/', async (req, res) => {
   const allCookies = req.cookies;
   const { userCardId } = req.body;
   console.log('allCookies', allCookies);
-  if (!allCookies.cart) {
+  if (req.session.isAutorized) {
+    if (!req.session.cart) {
+      req.session.cart = [];
+      req.session.cart.push(userCardId);
+      res.status(200).send({ number: req.session.cart.length });
+    } else {
+      req.session.cart.push(userCardId);
+      res.status(200).send({ number: req.session.cart.length });
+    }
+    console.log('!!!!!!!!!!', req.session.cart);
+  } else if (!allCookies.cart) {
     const arrOfCart = [];
     arrOfCart.push(userCardId);
     console.log(arrOfCart);
@@ -25,7 +35,6 @@ router.put('/', async (req, res) => {
     // console.log('arrOfCart!!!!!!!!!!!!!!', arrOfCart);
     arrOfCart.push(userCardId);
     // console.log('arrOfCart', JSON.stringify(arrOfCart));
-
     res.cookie('cart', JSON.stringify(arrOfCart));
     res.status(200).send({ number: arrOfCart.length });
   }

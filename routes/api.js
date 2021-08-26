@@ -157,6 +157,11 @@ router.post('/login', async (req, res) => {
       if (isCorrectPass) {
         req.session.isAutorized = true;
         req.session.user = user;
+        if (req.cookies.cart) {
+          req.session.cart = req.cookies.cart;
+          const cartIndex = req.cookies.findIndex((el) => el.cart)
+          req.cookies.splice(cartIndex, 1);
+        }
         return res.render('users/profile', { session: req.session });
       }
     }
