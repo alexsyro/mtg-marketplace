@@ -1,11 +1,21 @@
 body {
   background-color: #212121;
   background-image: url('/img/banner.jpg');
+  margin: 0px;
 }
 
 .banner {
   width: 200px;
   height: 100px;
+}
+header {
+  width: 100%;
+  left: 0;
+  top: 0;
+  margin: 0px;
+  padding: 0px;
+  position: sticky;
+  z-index: 100;
 }
 
 #upper-header {
@@ -18,7 +28,7 @@ body {
 #search-div {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   background-color: cadetblue;
 }
 
@@ -47,15 +57,11 @@ p {
   margin-top: 1.5em;
 }
 
-.cards {
-  border-radius: 5%;
-  width: 200px;
-  height: 300px;
-}
-
 #card-container {
   margin: 30px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card-info {
@@ -65,8 +71,16 @@ p {
   align-items: center;
 }
 
+.cards {
+  opacity: 100%;
+  border-radius: 5%;
+  width: 260px;
+  height: 400px;
+}
+
 .card-div {
-  border: 2px solid white;
+  opacity: 95%;
+  border: 2px solid rgb(134, 134, 134);
   border-radius: 5%;
   background-color: rgb(19, 18, 18);
   font-weight: bolder;
@@ -102,4 +116,18 @@ p {
   justify-content: space-between;
   align-items: center;
   border: 0.2em solid rgb(255, 255, 255);
+}
+
+.card-sellers {
+  /* border: 1px solid white; */
+  width: 50%;
+  background-color: black;
+  color: white;
+  opacity: 90%;
+}
+td,
+tr,
+th {
+  border: 1px solid white;
+  text-align: center;
 }

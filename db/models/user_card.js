@@ -44,6 +44,14 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      isFoil: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      quality: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
       price: {
         allowNull: false,
         type: DataTypes.INTEGER,

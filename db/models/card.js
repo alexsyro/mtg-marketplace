@@ -23,17 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
-      quality: {
-        allowNull: false,
-        type: DataTypes.TEXT,
-      },
       img: {
         allowNull: false,
         type: DataTypes.TEXT,
-      },
-      isFoil: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
       },
     },
     {

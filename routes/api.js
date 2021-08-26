@@ -50,7 +50,7 @@ router.get('/cards', async (req, res) => {
             id: prod.CardId,
           },
         },
-        { raw: true },
+        { raw: true }
       );
       return card;
     });
@@ -58,8 +58,8 @@ router.get('/cards', async (req, res) => {
     const fullProduct = products.map((prod, index) => ({
       id: cards[index].id,
       type: cards[index].type,
-      isFoil: cards[index].isFoil,
-      quality: cards[index].quality,
+      isFoil: prod.isFoil,
+      quality: prod.quality,
       price: prod.price,
       name: cards[index].name,
       img: cards[index].img,
@@ -75,16 +75,12 @@ router.get('/cards', async (req, res) => {
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
   console.log(req.body);
-  const {
-    name, type, quality, isFoil,
-  } = req.body;
+  const { name, type, quality, isFoil, price } = req.body;
   const img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
     type,
-    quality,
     img,
-    isFoil: isFoil || false,
   };
 
   try {
@@ -92,8 +88,10 @@ router.post('/cards', upload.single('card'), async (req, res) => {
     const product = await UserCard.create({
       CardId: cardEntry.id,
       UserLogin: req.session.user.login,
-      city: 'Moscow',
-      price: 100,
+      city: req.session.user.city,
+      quality,
+      price,
+      isFoil: isFoil || false,
       status: 'for sale',
     });
     res.redirect('/api/cards');
@@ -106,9 +104,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
 
 // New user registration
 router.post('/users/new', async (req, res) => {
-  const {
-    login, email, password, city, phone,
-  } = req.body;
+  const { login, email, password, city, phone } = req.body;
   try {
     // const isUniqueLogin = await User.checkUnique('login', login);
     // const isUniqueEmail = await User.checkUnique('email', email);
