@@ -123,7 +123,6 @@ router.post('/users/new', async (req, res) => {
       },
       defaults: inputUser,
     });
-    req.session = {};
     if (isNew) {
       console.log('SESSION', req.session);
       req.session.user = user;
@@ -152,7 +151,6 @@ router.post('/login', async (req, res) => {
         [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
       },
     });
-    req.session = {};
     if (user) {
       const isCorrectPass = await bcrypt.compare(password, user.password);
       console.log('is correctpass:', isCorrectPass);
