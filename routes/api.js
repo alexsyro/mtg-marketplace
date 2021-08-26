@@ -32,7 +32,7 @@ router.get('/cards', async (req, res) => {
             id: prod.CardId,
           },
         },
-        { raw: true }
+        { raw: true },
       );
       return card;
     });
@@ -57,7 +57,9 @@ router.get('/cards/new', (req, res) => {
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
   console.log(req.body);
-  const { name, type, quality, isFoil } = req.body;
+  const {
+    name, type, quality, isFoil,
+  } = req.body;
   const img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
@@ -86,7 +88,9 @@ router.post('/cards', upload.single('card'), async (req, res) => {
 
 // New user registration
 router.post('/users/new', async (req, res) => {
-  const { login, email, password, city, phone } = req.body;
+  const {
+    login, email, password, city, phone,
+  } = req.body;
   try {
     // const isUniqueLogin = await User.checkUnique('login', login);
     // const isUniqueEmail = await User.checkUnique('email', email);
