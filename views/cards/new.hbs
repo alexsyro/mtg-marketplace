@@ -1,0 +1,40 @@
+<form
+      class="new-card"
+      action="/api/cards/"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="card" />
+      <div class="inside-form-container">
+        <p>Тип карты</p>
+        <select name="select-type">
+          <option value="Чары" selected>Чары</option>
+          <option value="Земли">Земли</option>
+          <option value="Существа">Существа</option>
+          <option value="Волшебство">Волшебство</option>
+          <option value="Мгновенное заклинание">Мгновенное заклинание</option>
+          <option value="Артефакт">Артефакт</option>
+        </select>
+      </div>
+
+      <div class="inside-form-container">
+        <p>Качество карты</p>
+        <select name="select-quality">
+          <option value="GM" selected>GM</option>
+          <option value="M">M</option>
+          <option value="NM">NM</option>
+          <option value="SP">SP</option>
+          <option value="MP">MP</option>
+          <option value="PL">PL</option>
+          <option value="HP">HP</option>
+          <option value="DM">DM</option>
+        </select>
+      </div>
+
+      <div class="inside-form-container">
+        <label for="foiled-card">Фольгированная</label>
+        <input type="checkbox" id="foiled-card" name="isFoil" value="false" />
+      </div>
+
+      <button class="submit-btn" type="submit">Добавить</button>
+    </form>

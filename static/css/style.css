@@ -16,3 +16,28 @@
   justify-content: center;
   background-color: cadetblue;
 }
+
+/* new card add  */
+
+.new-card {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.inside-form-container {
+  margin-top: 1.5em;
+  text-align: left;
+}
+
+.submit-btn {
+  margin-top: 1.5em;
+}
