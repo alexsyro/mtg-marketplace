@@ -14,7 +14,7 @@ module.exports = {
         nickname: 'iren',
         email: 'iren@iren.com',
         password: 'iren',
-        city: 'Moscow',
+        city: 'Saint-Petersburg',
         phone: '+79000000002',
         createdAt: new Date(),
         updatedAt: new Date(),

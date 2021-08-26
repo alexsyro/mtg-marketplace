@@ -2,16 +2,18 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('UserCards', [
       {
+        cardCity: 'Saint-Petersburg',
         cardId: 1,
         userNickname: 'iren',
-        status: 'onsell',
+        status: 'for sale',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
+        cardCity: 'Moscow',
         cardId: 2,
         userNickname: 'jack',
-        status: 'onsell',
+        status: 'sold',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
