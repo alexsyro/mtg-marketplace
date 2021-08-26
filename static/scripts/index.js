@@ -16,17 +16,17 @@ document.addEventListener('click', async (e) => {
     const response = await fetch('/registration');
     const data = await response.text();
     document.body.innerHTML = data;
-
-    const nextURL = 'http://localhost:3000/registration';
-    const nextTitle = '';
-    const nextState = {};
-    window.history.replaceState(nextState, nextTitle, nextURL);
+    window.location = '/users/profile';
+    // const nextURL = 'http://localhost:3000/registration';
+    // const nextTitle = '';
+    // const nextState = {};
+    // window.history.replaceState(nextState, nextTitle, nextURL);
   }
 
   if (e.target.id === 'logoutBtn') {
     e.preventDefault();
     const response = await fetch('/logout');
-    window.location('/');
+    window.location = '/';
   }
 
   if (e.target.id === 'addCardBtn') {

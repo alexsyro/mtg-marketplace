@@ -18,7 +18,7 @@
           <img class='banner' src='/img/banner.jpg' />
         </div>
         <div id='profile'>
-          {{#if isAuthorized}}
+          {{#if session.isAutorized}}
             <button id='profileBtn'>Profile</button>
             <button id='logoutBtn'>Logout</button>
           {{else}}
@@ -55,9 +55,11 @@
           <option value='false'>Нет</option>
         </select>
         <button id='searchBtn'>Поиск</button>
-        <button id='addCardBtn'>Выставить карту на продажу</button>
-      </div>
 
+      </div>
+      {{#if session.isAutorized}}
+        <button id='addCardBtn'>Выставить карту на продажу</button>
+      {{/if}}
     </header>
     {{{body}}}
   </body>

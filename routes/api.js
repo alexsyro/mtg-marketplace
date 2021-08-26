@@ -21,7 +21,7 @@ const imageStorage = multer.diskStorage({
 const upload = multer({ storage: imageStorage });
 
 router.get('/cards/new', (req, res) => {
-  res.render('cards/new');
+  res.render('cards/new', { session: req.session });
 });
 
 router.get('/cards/:cardId', async (req, res) => {
@@ -36,7 +36,7 @@ router.get('/cards/:cardId', async (req, res) => {
       CardId: cardId,
     },
   });
-  res.render('cards/show', { card, sellers });
+  res.render('cards/show', { card, sellers, session: req.session });
 });
 
 // Shows all cards on sale
@@ -61,11 +61,11 @@ router.get('/cards', async (req, res) => {
       name: cards[index].name,
       img: cards[index].img,
     }));
-    res.render('cards/index', { fullProduct, session: req.sessions });
+    res.render('cards/index', { fullProduct, session: req.session });
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
-    res.status(500).render('cards/error', { error, message, session: req.sessions });
+    res.status(500).render('cards/error', { error, message, session: req.session });
   }
 });
 
@@ -86,7 +86,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
     const [cardEntry] = await Card.findOrCreate({ where: { ...card }, defaults: card });
     const product = await UserCard.create({
       CardId: cardEntry.id,
-      UserLogin: 'w',
+      UserLogin: req.session.user.login,
       city: 'Moscow',
       price: 100,
       status: 'for sale',
@@ -123,7 +123,7 @@ router.post('/users/new', async (req, res) => {
       console.log('SESSION', req.session);
       req.session.user = user;
       req.session.isAutorized = true;
-      res.render('users/profile', { user });
+      res.render('users/profile', { user, session: req.session });
       // cart storing in the session if exists
     } else {
       // show that user or password is not unique
@@ -133,7 +133,7 @@ router.post('/users/new', async (req, res) => {
   } catch (error) {
     // req.session.isAutorized = false;
     const message = 'Нет связи с БД, не удалось создать запись';
-    res.status(500).render('users/error', { error, message, session: req.sessions });
+    res.status(500).render('users/error', { error, message, session: req.session });
   }
 });
 
@@ -161,7 +161,7 @@ router.post('/login', async (req, res) => {
     res.json({ message: 'Логин, пароль или почта не найдены' });
   } catch (error) {
     const message = 'Нет связи с БД, не удалось создать запись';
-    res.status(500).render('users/error', { error, message, session: req.sessions });
+    res.status(500).render('users/error', { error, message, session: req.session });
   }
 });
 

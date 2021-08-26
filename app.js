@@ -34,7 +34,7 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 12,
+    maxAge: 86400 * 12,
     httpOnly: true,
   },
 };
@@ -55,7 +55,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  // destroy session
+  req.session.destroy();
+  res.clearCookie();
   // clear cookie
   res.redirect('/cards');
 });
