@@ -1,4 +1,5 @@
 document.addEventListener('click', async (e) => {
+  e.preventDefault();
   const userCardId = e.target.id;
   const response = await fetch('/cart', {
     method: 'PUT',
@@ -9,6 +10,6 @@ document.addEventListener('click', async (e) => {
   });
 
   const { buyingCardsNumber } = await response.json();
-  const cadrtDiv = document.getElementById('cart');
-  cadrtDiv.innerText = buyingCardsNumber.toString();
+  const cartDiv = document.getElementById('cart');
+  cartDiv.innerText = buyingCardsNumber.toString();
 });

@@ -1,6 +1,6 @@
 const express = require('express');
-const { Json } = require('sequelize/types/lib/utils');
-const { UserCard } = require('../db/models');
+// const { Json } = require('sequelize/types/lib/utils');
+// const { UserCard } = require('../db/models');
 
 const router = express.Router();
 
