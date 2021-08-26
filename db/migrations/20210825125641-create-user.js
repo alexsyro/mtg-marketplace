@@ -4,17 +4,19 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       nickname: {
         type: Sequelize.TEXT,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
       },
       email: {
         type: Sequelize.TEXT,
       },
       password: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
       },
       city: {
         type: Sequelize.TEXT,
