@@ -1,11 +1,24 @@
+const path = require('path');
 const express = require('express');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 const { Op } = require('sequelize');
 const { User, Card, UserCard } = require('../db/models');
 
 const { Router } = express;
 
 const router = Router();
+
+const imageStorage = multer.diskStorage({
+  destination(req, file, callback) {
+    callback(null, 'static/uploads');
+  },
+  filename(req, file, cb) {
+    cb(null, `${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage: imageStorage });
 
 // Shows all cards on sale
 router.get('/cards', async (req, res) => {
@@ -28,14 +41,20 @@ router.get('/cards', async (req, res) => {
   }
 });
 
+router.get('/cards/new', (req, res) => {
+  res.render('cards/new');
+});
+
 // Add new card
-router.post('/cards', async (req, res) => {
-  const { name, type, quality, price, img, isFoil } = req.body;
+router.post('/cards', upload.single('card'), async (req, res) => {
+  console.log('REQ::::::::::', req.file);
+  const { type, quality, isFoil } = req.body;
+  let name = 'Shit';
+  let img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
     type,
     quality,
-    price,
     img,
     isFoil,
   };
@@ -43,12 +62,15 @@ router.post('/cards', async (req, res) => {
   try {
     const [cardEntry] = await Card.findOrCreate({ where: { ...card }, defaults: card });
     const product = await UserCard.create({
-      CardId: card.id,
-      UserId: req.session.user.id,
-      city: req.session.user.city,
+      CardId: cardEntry.id,
+      UserLogin: 'w',
+      city: 'Moscow',
+      price: 100,
+      status: 'for sale',
     });
-    res.render('/cards', { session: req.session });
+    res.redirect('/api/cards');
   } catch (error) {
+    console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('cards/error', { error, message, session: req.session });
   }
