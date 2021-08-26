@@ -1,0 +1,16 @@
+<div class="single-card-container">
+  <img
+    src="https://images.unsplash.com/photo-1534171472159-edb6d1e0b63c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2FuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=500&q=200"
+    alt=""
+  />
+  <p>Sand</p>
+</div>
+ 
+ {{#each arr}}
+<div class="seller-container">
+  <p>{{this.name}}</p>
+  <p>{{this.price}}</p>
+  <p>{{this.city}}</p>
+  <button type="click">Добавить в корзину</button>
+</div>
+ {{/each}}
