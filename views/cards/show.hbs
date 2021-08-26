@@ -1,13 +1,21 @@
-<div class='single-card-container'>
-  <img class='cards' src='{{card.img}}' alt='' />
-  <p>{{card.name}}</p>
-</div>
-
-{{#each sellers}}
-  <div class='seller-container'>
-    <p>{{this.UserLogin}}</p>
-    <p>{{this.price}}</p>
-    <p>{{this.city}}</p>
-    <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>
+<div class='card-info'>
+  <div id='card-container'>
+    <div class='card-div'>
+      <img class='cards' src='{{card.img}}' />
+      <p>{{card.name}}</p>
+      <p>Качество: {{card.quality}}</p>
+      <p>Тип карты: {{card.type}}</p>
+      <p>Фольгированная: {{card.isFoil}}</p>
+    </div>
   </div>
-{{/each}}
+
+  {{#each sellers}}
+    <div class='seller-container'>
+      <p>{{this.UserLogin}}</p>
+      <p>{{this.price}}</p>
+      <p>{{this.quality}}</p>
+      <p>{{this.city}}</p>
+      <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>
+    </div>
+  {{/each}}
+</div>

@@ -57,6 +57,9 @@ router.get('/cards', async (req, res) => {
     const cards = await Promise.all(promisesCards);
     const fullProduct = products.map((prod, index) => ({
       id: cards[index].id,
+      type: cards[index].type,
+      isFoil: cards[index].isFoil,
+      quality: cards[index].quality,
       price: prod.price,
       name: cards[index].name,
       img: cards[index].img,
@@ -124,7 +127,6 @@ router.post('/users/new', async (req, res) => {
       defaults: inputUser,
     });
     if (isNew) {
-      console.log('SESSION', req.session);
       req.session.user = user;
       req.session.isAutorized = true;
       res.render('users/profile', { user, session: req.session });
