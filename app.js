@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/cart');
