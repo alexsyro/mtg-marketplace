@@ -1,16 +1,13 @@
-<div class="single-card-container">
-  <img
-    src="{{card.img}}"
-    alt=""
-  />
+<div class='single-card-container'>
+  <img class='cards' src='{{card.img}}' alt='' />
   <p>{{card.name}}</p>
 </div>
- 
- {{#each sellers}}
-<div class="seller-container">
-  <p>{{this.UserLogin}}</p>
-  <p>{{this.price}}</p>
-  <p>{{this.city}}</p>
-  <button type="click">Добавить в корзину</button>
-</div>
- {{/each}}
+
+{{#each sellers}}
+  <div class='seller-container'>
+    <p>{{this.UserLogin}}</p>
+    <p>{{this.price}}</p>
+    <p>{{this.city}}</p>
+    <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>
+  </div>
+{{/each}}
