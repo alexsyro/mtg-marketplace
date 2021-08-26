@@ -13,8 +13,8 @@ document.addEventListener('click', async (e) => {
 
     const buyingCardsNumber = await response.json();
     // console.log(buyingCardsNumber);
-    const cartDiv = document.getElementById('cart');
+    const cartBtn = document.getElementById('cart');
     // console.log(cartDiv);
-    cartDiv.innerText = buyingCardsNumber.number.toString();
+    cartBtn.value = `Купить ${buyingCardsNumber.number}`;
   }
 });
