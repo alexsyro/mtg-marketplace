@@ -6,7 +6,7 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.INTEGER,
       },
-      nickname: {
+      login: {
         type: Sequelize.TEXT,
         primaryKey: true,
       },

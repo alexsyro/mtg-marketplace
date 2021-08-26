@@ -9,12 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ UserCard }) {
-      User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
+    static associate({ Card, UserCard }) {
+      User.hasMany(Card, { through: UserCard });
+      // User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
     }
   }
   User.init({
-    nickname: {
+    login: {
       type: DataTypes.TEXT,
       primaryKey: true,
     },

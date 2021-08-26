@@ -44,12 +44,12 @@ router.post('/cards/', async (req, res) => {
 
 // New user registration
 router.post('/users/new', async (req, res) => {
-  const { nickname, email, password, city, phone } = req.body;
+  const { login, email, password, city, phone } = req.body;
   try {
-    // const isUniqueLogin = await User.checkUnique('login', nickname);
+    // const isUniqueLogin = await User.checkUnique('login', login);
     // const isUniqueEmail = await User.checkUnique('email', email);
     const inputUser = {
-      nickname,
+      login,
       email,
       password,
       city,
@@ -57,7 +57,7 @@ router.post('/users/new', async (req, res) => {
     };
     const [user, isNew] = await User.findOrCreate({
       where: {
-        [Op.or]: [{ nickname }, { email }],
+        [Op.or]: [{ login }, { email }],
       },
       defaults: inputUser,
     });
@@ -66,7 +66,7 @@ router.post('/users/new', async (req, res) => {
       req.session = {};
       req.session.user = user;
       req.session.isAutorized = true;
-      res.render(`users/${user.nickname}`);
+      res.render(`users/${user.login}`);
       // cart storing in the session if exists
     } else {
       // show that user or password is not unique
