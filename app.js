@@ -37,7 +37,7 @@ let imageStorage = multer.diskStorage({
 let upload = multer({imageStorage: imageStorage});
 
 app.get('/', (req, res) => {
-  res.redirect('/cards');
+  res.redirect('/api/cards');
 });
 
 app.get('/registration', (req, res) => {

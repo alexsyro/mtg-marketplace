@@ -6,7 +6,7 @@ const upload = require('../app.js')
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('cards/index');
+  res.redirect('/api/cards/');
 });
 
 router.post('/new', upload.single('card') (req, res) => {

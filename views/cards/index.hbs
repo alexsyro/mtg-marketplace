@@ -1,8 +1,8 @@
 <div id="card-container">
   {{#each cards}}
   <div class="card-div">
-    <img class="cards" src={{this.imgPath}}>
-    <a class="card-name" href=`/{{this.id}}`>{{this.name}}</a>
+    <img class="cards" src={{this.img}}>
+    <a class="card-name" href="/cards/{{this.id}}">{{this.name}}</a>
     <p class="card-price">{{this.price}}</p>
   </div>
   {{/each}}
