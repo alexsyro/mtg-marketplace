@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/cart');
@@ -22,6 +24,23 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 // Cookier
 app.use(cookieParser());
+
+// Session
+
+const sessionConfig = {
+  store: new FileStore(),
+  name: 'user_sid',
+  secret: 'pamagiti',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 12,
+    httpOnly: true,
+  },
+};
+
+// session use
+app.use(session(sessionConfig));
 
 app.get('/', (req, res) => {
   res.redirect('/api/cards');

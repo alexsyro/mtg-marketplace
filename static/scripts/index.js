@@ -34,11 +34,4 @@ document.addEventListener('click', async (e) => {
     const data = await response.text();
     document.body.innerHTML = data;
   }
-
-  // if (e.target.id === 'profileBtn') {
-  //   e.preventDefault()
-  //   const response = await fetch('/')
-  //   const data = await response.text()
-  //   document.body.innerHTML = data
-  // }
 });
