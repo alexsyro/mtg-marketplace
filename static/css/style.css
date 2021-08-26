@@ -48,6 +48,7 @@ p {
 }
 
 .cards {
+  border-radius: 5%;
   width: 200px;
   height: 300px;
 }
@@ -57,7 +58,15 @@ p {
   display: flex;
 }
 
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .card-div {
+  border: 2px solid white;
   border-radius: 5%;
   background-color: rgb(19, 18, 18);
   font-weight: bolder;
@@ -70,6 +79,8 @@ p {
 
 /*cards/display.hbs  */
 .single-card-container {
+  background-color: black;
+  color: white;
   width: 40%;
   height: auto;
   margin: 0 auto 3em;
@@ -77,10 +88,12 @@ p {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  border: 0.2em solid black;
+  border: 0.2em solid rgb(255, 255, 255);
 }
 
 .seller-container {
+  background-color: black;
+  color: white;
   width: 70%;
   height: auto;
   margin: 0 auto;
@@ -88,5 +101,5 @@ p {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 0.2em solid black;
+  border: 0.2em solid rgb(255, 255, 255);
 }
