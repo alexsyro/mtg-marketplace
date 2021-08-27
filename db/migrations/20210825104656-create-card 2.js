@@ -15,17 +15,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      quality: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
       img: {
         allowNull: false,
         type: Sequelize.TEXT,
-      },
-      isFoil: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

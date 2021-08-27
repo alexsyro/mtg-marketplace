@@ -10,6 +10,7 @@
       <th>Фольгированная</th>
       <th>Город</th>
     </tr>
+    {{#if cards}}
     {{#each cards}}
       <tr>
         <td>
@@ -33,4 +34,10 @@
       </tr>
     {{/each}}
   </table>
+  <form action="/cart/buy">
+    <input type="submit" value="купить">
+  </form>
+  {{else}}
+  <h1>Корзина пуста</h1>
+  {{/if}}
 

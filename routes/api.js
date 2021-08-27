@@ -65,14 +65,23 @@ router.get('/cards', async (req, res) => {
       img: cards[index].img,
       city: prod.city,
     }));
+
     const cities = [];
     fullProduct.forEach((prod) => {
       if (!cities.includes(prod.city)) {
         cities.push(prod.city);
       }
     });
-    console.log(cities);
-    res.render('cards/index', { cities, fullProduct, session: req.session });
+    if (req.session.cart) {
+      const cart = req.session.cart.length;
+      res.render('cards/index', { cities, cart, fullProduct, session: req.session });
+    } else if (req.cookies.cart) {
+      const cartArr = JSON.parse(req.cookies.cart);
+      const cart = cartArr.length;
+      res.render('cards/index', { cities, cart, fullProduct, session: req.session });
+    } else {
+      res.render('cards/index');
+    }
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
