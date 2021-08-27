@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      CardType: {
+        field: 'card_type',
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
       UserLogin: {
         field: 'user_login',
         type: DataTypes.INTEGER,

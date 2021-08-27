@@ -24,19 +24,11 @@ router.get('/cards/new', (req, res) => {
   res.render('cards/new', { session: req.session });
 });
 
-router.get('/cards/:cardId', async (req, res) => {
-  const { cardId } = req.params;
-  const card = await Card.findOne({
-    where: {
-      id: cardId,
-    },
-  });
-  const sellers = await UserCard.findAll({
-    where: {
-      CardId: cardId,
-    },
-  });
-  res.render('cards/show', { card, sellers, session: req.session });
+router.get('/search', async (req, res) => {
+  console.log('QUERY::::', req.query);
+
+  const cards = await UserCard.findAll({ where: req.query });
+  res.render('cards/index', { cards, session: req.session });
 });
 
 // Shows all cards on sale
@@ -57,12 +49,13 @@ router.get('/cards', async (req, res) => {
     const cards = await Promise.all(promisesCards);
     const fullProduct = products.map((prod, index) => ({
       id: cards[index].id,
-      type: cards[index].type,
+      CardType: prod.CardType,
       isFoil: prod.isFoil,
       quality: prod.quality,
       price: prod.price,
       name: prod.CardName,
       img: cards[index].img,
+      city: prod.city,
     }));
     res.render('cards/index', { fullProduct, session: req.session });
   } catch (error) {
@@ -70,6 +63,21 @@ router.get('/cards', async (req, res) => {
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('cards/error', { error, message, session: req.session });
   }
+});
+
+router.get('/cards/:cardId', async (req, res) => {
+  const { cardId } = req.params;
+  const card = await Card.findOne({
+    where: {
+      id: cardId,
+    },
+  });
+  const sellers = await UserCard.findAll({
+    where: {
+      CardId: cardId,
+    },
+  });
+  res.render('cards/show', { card, sellers, session: req.session });
 });
 
 // Add new card
@@ -89,6 +97,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
     await UserCard.create({
       CardId: cardEntry.id,
       CardName: cardEntry.name,
+      CardType: cardEntry.type,
       UserLogin: req.session.user.login,
       city: req.session.user.city,
       quality,
@@ -118,14 +127,12 @@ router.post('/users/new', async (req, res) => {
       city,
       phone,
     };
-    const [user, isNew] = await User.findOrCreate(
-      {
-        where: {
-          [Op.or]: [{ login }, { email }],
-        },
-        defaults: inputUser,
+    const [user, isNew] = await User.findOrCreate({
+      where: {
+        [Op.or]: [{ login }, { email }],
       },
-    );
+      defaults: inputUser,
+    });
     if (isNew) {
       req.session.user = user;
       req.session.isAutorized = true;
@@ -153,7 +160,7 @@ router.post('/login', async (req, res) => {
           [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
         },
       },
-      { raw: true },
+      { raw: true }
     );
     if (user) {
       const isCorrectPass = await bcrypt.compare(password, user.password);

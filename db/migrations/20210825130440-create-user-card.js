@@ -23,6 +23,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      CardType: {
+        field: 'card_type',
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       UserLogin: {
         field: 'user_login',
         type: Sequelize.TEXT,

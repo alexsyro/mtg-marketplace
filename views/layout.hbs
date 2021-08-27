@@ -19,9 +19,9 @@
           <a href='/'><img class='banner' src='/img/banner.png' /></a>
         </div>
         <div id='search-div'>
-        <input id='searchInput' type='search' name='search' placeholder='Название карты' />
-        <select name='type'>
-          <option value='None' selected>Тип карты</option>
+        <input id='cardNameInput' type='search' name='search' placeholder='Название карты' />
+        <select id='cardType'>
+          <option value='*' selected>Тип карты</option>
           <option value='Земли'>Земли</option>
           <option value='Существа'>Существа</option>
           <option value='Волшебство'>Волшебство</option>
@@ -29,8 +29,8 @@
           <option value='Чары'>Чары</option>
           <option value='Артефакт'>Артефакт</option>
         </select>
-        <select name='quality'>
-          <option value='None' selected>Качество</option>
+        <select id='cardQuality'>
+          <option value='*' selected>Качество</option>
           <option value='GM'>GM</option>
           <option value='NM'>NM</option>
           <option value='SP'>SP</option>
@@ -39,10 +39,16 @@
           <option value='HP'>HP</option>
           <option value='DM'>DM</option>
         </select>
-        <select name='isFoil'>
-          <option value='None' selected>Фольгированная</option>
+        <select id='cardFoil'>
+          <option value='*' selected>Фольгированная</option>
           <option value='true'>Да</option>
           <option value='false'>Нет</option>
+        </select>
+        <select id='townSelect'>
+          <option value='*' selected>Город</option>
+          {{#each cards}}
+          <option value={{this.city}}>{{this.city}}</option>
+          {{/each}}
         </select>
         <button id='searchBtn'>Поиск</button>
 
@@ -55,7 +61,7 @@
             <button id='loginBtn'>Login</button>
             <button id='regBtn'>Registration</button>
           {{/if}}
-            <input id='cart' type='submit' value='Корзина {{}}}' />
+            <input id='cart' type='submit' value='Корзина' />
         </div>
       </div>
 

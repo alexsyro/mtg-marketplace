@@ -34,4 +34,13 @@ document.addEventListener('click', async (e) => {
     const data = await response.text();
     document.body.innerHTML = data;
   }
+
+  if (e.target.id === 'searchBtn') {
+    const CardName = document.getElementById('cardNameInput').value || '*';
+    const CardType = document.getElementById('cardType').value;
+    const quality = document.getElementById('cardQuality').value;
+    const isFoil = document.getElementById('cardFoil').value;
+    const city = document.getElementById('townSelect').value;
+    window.location = `/api/search?CardName=${CardName}&CardType=${CardType}&quality=${quality}&isFoil=${isFoil}&city=${city}`;
+  }
 });
