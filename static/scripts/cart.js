@@ -20,4 +20,11 @@ document.addEventListener('click', async (e) => {
   if (e.target.id === 'cart') {
     window.location = '/cart';
   }
+
+  if (e.target.id === 'OrderBtn') {
+    const response = await fetch('/cart/order', {
+      method: 'PUT',
+    });
+    document.body.innerHTML = await response.text();
+  }
 });
