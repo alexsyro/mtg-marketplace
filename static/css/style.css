@@ -1,6 +1,6 @@
 body {
   background-color: #212121;
-  background-image: url("/img/banner.jpg");
+  background-image: url('/img/banner.jpg');
   margin: 0px;
 }
 
@@ -40,10 +40,12 @@ header {
   flex-direction: row;
   justify-content: center;
   height: 2em;
-    
 }
 
-#search-div input, select, option, button {
+#search-div input,
+select,
+option,
+button {
   font-family: 'Pangolin', cursive;
   font-size: 1em;
 }
@@ -54,7 +56,7 @@ header {
   margin-right: 1em;
 }
 
-#addCardBtn{
+#addCardBtn {
   background: #d73b1f;
   border: 1px solid #d6874c;
   margin-left: 0.5em;
@@ -172,34 +174,75 @@ th {
 }
 
 /* login form */
- .form-style {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 30%;
-   height: 20em;
-   min-height: 20em;
-   margin: 2em auto 0;
-   background: rgb(0, 0, 0, .7);
+.form-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 20em;
+  min-height: 20em;
+  margin: 2em auto 0;
+  background: rgb(0, 0, 0, 0.7);
+}
 
- }
- 
- .form-input {
-   margin: 0.7em;
-   width: 20em;
-   height: 3em;
-   font-family: 'Pangolin', cursive;
-   font-size: 1em;
- }
+.form-input {
+  margin: 0.7em;
+  width: 20em;
+  height: 3em;
+  font-family: 'Pangolin', cursive;
+  font-size: 1em;
+}
 
- .form-btn {
-   width: 10em;
-   height: 2em;
-   margin-top: 1em;
-   cursor: pointer;
- }
+.form-btn {
+  width: 10em;
+  height: 2em;
+  margin-top: 1em;
+  cursor: pointer;
+}
 
- #regFormId {
-   height: 30em;
- }
+#regFormId {
+  height: 30em;
+}
+
+/* cart */
+#cart-container {
+  width: 50%;
+  margin: 5em auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgb(0, 0, 0, 0.7);
+}
+
+.card-sellers {
+  width: auto;
+  margin-bottom: 2em;
+}
+
+#carts-title,
+#carts-list {
+  color: white;
+}
+#OrderBtn {
+  margin-bottom: 2em;
+}
+
+/* complete cart */
+#complete-container {
+  padding: 2em;
+  width: 50%;
+  margin: 5em auto 0;
+  color: white;
+  align-items: center;
+  background: rgb(0, 0, 0, 0.7);
+}
+
+#complete-container h1 {
+  font-size: 3em;
+}
+
+#complete-container p {
+  font-size: 1.5em;
+}
