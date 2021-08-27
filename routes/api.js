@@ -75,9 +75,7 @@ router.get('/cards', async (req, res) => {
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
   console.log(req.body);
-  const {
-    name, type, quality, isFoil, price,
-  } = req.body;
+  const { name, type, quality, isFoil, price } = req.body;
   const img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
@@ -86,7 +84,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
   };
 
   try {
-    console.log('USER:', req.session.user);
+    console.log('USER:::', req.session.user.login);
     const [cardEntry] = await Card.findOrCreate({ where: { ...card }, defaults: card });
     await UserCard.create({
       CardId: cardEntry.id,
@@ -108,9 +106,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
 
 // New user registration
 router.post('/users/new', async (req, res) => {
-  const {
-    login, email, password, city, phone,
-  } = req.body;
+  const { login, email, password, city, phone } = req.body;
   try {
     // const isUniqueLogin = await User.checkUnique('login', login);
     // const isUniqueEmail = await User.checkUnique('email', email);
@@ -122,17 +118,17 @@ router.post('/users/new', async (req, res) => {
       city,
       phone,
     };
-    const [fullUser, isNew] = await User.findOrCreate({
-      where: {
-        [Op.or]: [{ login }, { email }],
+    const [user, isNew] = await User.findOrCreate(
+      {
+        where: {
+          [Op.or]: [{ login }, { email }],
+        },
+        defaults: inputUser,
       },
-      defaults: inputUser,
-    });
+    );
     if (isNew) {
-      const removeProperty = (prop) => ({ [prop]: _, ...rest }) => rest;
-      const removePassword = removeProperty('password');
-      const user = removePassword(fullUser);
       req.session.user = user;
+      console.log('USER:::', user);
       req.session.isAutorized = true;
       res.render('users/profile', { user, session: req.session });
       // cart storing in the session if exists
@@ -153,19 +149,19 @@ router.post('/login', async (req, res) => {
   const { emailLogin, password } = req.body;
   console.log('BODY:', req.body);
   try {
-    const userEntry = await User.findOne({
-      where: {
-        [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
+    const user = await User.findOne(
+      {
+        where: {
+          [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
+        },
       },
-    });
-    if (userEntry) {
-      const isCorrectPass = await bcrypt.compare(password, userEntry.password);
+      { raw: true },
+    );
+    if (user) {
+      const isCorrectPass = await bcrypt.compare(password, user.password);
       console.log('is correctpass:', isCorrectPass);
       if (isCorrectPass) {
         req.session.isAutorized = true;
-        const removeProperty = (prop) => ({ [prop]: _, ...rest }) => rest;
-        const removePassword = removeProperty('password');
-        const user = removePassword(userEntry);
         req.session.user = user;
         if (req.cookies.cart) {
           req.session.cart = req.cookies.cart;
