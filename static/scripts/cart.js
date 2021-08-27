@@ -16,4 +16,8 @@ document.addEventListener('click', async (e) => {
     // console.log(cartDiv);
     cartBtn.value = `Купить ${buyingCardsNumber.number}`;
   }
+
+  if (e.target.id === 'cart') {
+    window.location = '/cart';
+  }
 });
