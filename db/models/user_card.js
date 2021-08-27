@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      CardName: {
+        field: 'card_name',
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       UserLogin: {
         field: 'user_login',
         type: DataTypes.INTEGER,

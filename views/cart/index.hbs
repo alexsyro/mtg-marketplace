@@ -1,0 +1,35 @@
+<h1>Оформление заказа</h1>
+
+<h3>Список карт:</h3>
+  <table class='card-sellers'>
+    <tr>
+      <th>Название</th>
+      <th>Продавец</th>
+      <th>Цена</th>
+      <th>Состояние</th>
+      <th>Фольгированная</th>
+      <th>Город</th>
+    </tr>
+    {{#each cards}}
+      <tr>
+        <td>
+          {{this.CardName}}
+        </td>
+        <td>
+          {{this.UserLogin}}
+        </td>
+        <td>
+          {{this.price}}
+        </td>
+        <td>
+          {{this.quality}}
+        </td>
+        <td>
+          {{this.isFoil}}
+        </td>
+        <td>
+          {{this.city}}
+        </td>
+      </tr>
+    {{/each}}
+  </table>

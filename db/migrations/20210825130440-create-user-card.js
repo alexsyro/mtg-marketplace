@@ -18,6 +18,11 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      CardName: {
+        field: 'card_name',
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       UserLogin: {
         field: 'user_login',
         type: Sequelize.TEXT,
