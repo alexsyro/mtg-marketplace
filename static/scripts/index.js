@@ -5,7 +5,7 @@ document.addEventListener('click', async (e) => {
     const data = await response.text();
     document.body.innerHTML = data;
 
-    const nextURL = 'http://localhost:3000/login';
+    const nextURL = '/login';
     const nextTitle = '';
     const nextState = {};
     window.history.replaceState(nextState, nextTitle, nextURL);

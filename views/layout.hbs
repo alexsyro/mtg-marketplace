@@ -7,11 +7,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/scripts/cards.js" defer></script>
     <script src="/scripts/cart.js" defer></script>
     <script src="/scripts/index.js" defer></script>
-    <script src="/scripts/login.js" defer></script>
-    <script src="/scripts/registration.js" defer></script>
     <script src="/scripts/users.js" defer></script>
     <title>MTG-Marketplace</title>
   </head>
@@ -60,6 +57,7 @@
       </div>
         <div id='profile'>
           {{#if session.isAutorized}}
+          
             <button id='profileBtn'>Profile</button>
             <button id='logoutBtn'>Logout</button>
           {{else}}
