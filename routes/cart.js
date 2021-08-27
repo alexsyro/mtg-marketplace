@@ -96,11 +96,18 @@ router.put('/order', async (req, res) => {
         i = 0;
       }
     }
-    console.log(cards);
     res.render('cart/complete', { cards, session: req.session });
   } else {
     res.render('users/login', { session: req.session });
   }
+});
+
+router.delete('/order', (req, res) => {
+  const { id } = req.body;
+  console.log(id);
+  req.session.cart = req.session.cart.filter((el) => el !== id);
+  console.log(req.session.cart);
+  res.render('cart', { session: req.session });
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 <h1>Оформление заказа</h1>
 
-    {{#if cards}}
-<h3>Список карт:</h3>
+{{#if cards}}
+  <h3>Список карт:</h3>
   <table class='card-sellers'>
     <tr>
       <th>Название</th>
@@ -31,11 +31,11 @@
         <td>
           {{this.city}}
         </td>
+        <td><button id={{this.id}} class='removeBtn'>Удалить</button></td>
       </tr>
     {{/each}}
   </table>
-    <input id='OrderBtn' type="submit" value="Оформить заказ">
-  {{else}}
+  <input id='OrderBtn' type='submit' value='Оформить заказ' />
+{{else}}
   <h1>Корзина пуста</h1>
-  {{/if}}
-
+{{/if}}
