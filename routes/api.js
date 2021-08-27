@@ -12,7 +12,7 @@ const router = Router();
 
 const imageStorage = multer.diskStorage({
   destination(req, file, callback) {
-    callback(null, path.join(__dirname, 'static/uploads'));
+    callback(null, 'static/uploads');
   },
   filename(req, file, cb) {
     cb(null, `${file.originalname}`);
