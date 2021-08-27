@@ -18,20 +18,7 @@
         <div id='banner'>
           <a href='/'><img class='banner' src='/img/banner.png' /></a>
         </div>
-        <div id='profile'>
-          {{#if session.isAutorized}}
-            <button id='profileBtn'>Profile</button>
-            <button id='logoutBtn'>Logout</button>
-          {{else}}
-            <button id='loginBtn'>Login</button>
-            <button id='regBtn'>Registration</button>
-          {{/if}}
-          <form action="/cart">
-            <input action=id='cart' type='submit' value='Корзина' />
-          </form>
-        </div>
-      </div>
-      <div id='search-div'>
+        <div id='search-div'>
         <input id='searchInput' type='search' name='search' placeholder='Название карты' />
         <select name='type'>
           <option value='None' selected>Тип карты</option>
@@ -59,6 +46,19 @@
         </select>
         <button id='searchBtn'>Поиск</button>
       </div>
+        <div id='profile'>
+          {{#if session.isAutorized}}
+            <button id='profileBtn'>Profile</button>
+            <button id='logoutBtn'>Logout</button>
+          {{else}}
+            <button id='loginBtn'>Login</button>
+            <button id='regBtn'>Registration</button>
+          {{/if}}
+            <input id='cart' type='submit' value='Корзина' />
+        </div>
+      </div>
+
+      
       {{#if session.isAutorized}}
         <button id='addCardBtn'>Выставить карту на продажу</button>
       {{/if}}
