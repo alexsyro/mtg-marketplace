@@ -12,7 +12,7 @@ const router = Router();
 
 const imageStorage = multer.diskStorage({
   destination(req, file, callback) {
-    callback(null, 'static/uploads');
+    callback(null, path.join(__dirname, 'static/uploads'));
   },
   filename(req, file, cb) {
     cb(null, `${file.originalname}`);
@@ -128,7 +128,6 @@ router.post('/users/new', async (req, res) => {
     );
     if (isNew) {
       req.session.user = user;
-      console.log('USER:::', user);
       req.session.isAutorized = true;
       res.render('users/profile', { user, session: req.session });
       // cart storing in the session if exists
@@ -147,7 +146,6 @@ router.post('/users/new', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   const { emailLogin, password } = req.body;
-  console.log('BODY:', req.body);
   try {
     const user = await User.findOne(
       {
