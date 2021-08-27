@@ -201,4 +201,16 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/profile', async (req, res) => {
+  const { login } = req.session.user;
+  const cards = await UserCard.findAll( {
+    where: {
+      user_login: login,
+    },
+    raw: true,
+  });
+  console.log(cards)
+  res.render('users/profile', { cards, session: req.session });
+});
+
 module.exports = router;
