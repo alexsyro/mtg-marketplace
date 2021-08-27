@@ -4,18 +4,14 @@ module.exports = {
       {
         name: 'Supercard',
         type: 'land',
-        quality: 'NM',
         img: 'zasnezhennoe_boloto.jpeg',
-        isFoil: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         name: 'blablaCard',
         type: 'land',
-        quality: 'NM',
         img: 'ravnina.jpeg',
-        isFoil: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

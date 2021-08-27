@@ -64,8 +64,12 @@ router.get('/cards', async (req, res) => {
       name: prod.CardName,
       img: cards[index].img,
     }));
-    const cart = req.session.cart.length
-    res.render('cards/index', { cart, fullProduct, session: req.session });
+    if (req.session.cart) {
+      const cart = req.session.cart.length;
+      res.render('cards/index', { cart, fullProduct, session: req.session });
+    } else {
+      res.render('cards/index', { fullProduct, session: req.session });
+    }
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
