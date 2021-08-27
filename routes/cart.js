@@ -99,7 +99,7 @@ router.put('/', async (req, res) => {
 
 router.put('/order', async (req, res) => {
   if (req.session.isAutorized) {
-    console.log(req.session.cart);
+    // console.log(req.session.cart);
     const cards = [];
     for (let i = 0; i < req.session.cart.length; i += 1) {
       if (req.session.cart.length) {
@@ -117,8 +117,8 @@ router.put('/order', async (req, res) => {
         // i = 0;
       }
     }
-    console.log('CARDS', cards);
-    console.log('EMAIL', req.session.user.email);
+    // console.log('CARDS', cards);
+    // console.log('EMAIL', req.session.user.email);
     sendDataToMail(cards, req.session.user.email);
     req.session.cart = [];
     res.render('cart/complete', { cards, session: req.session });
@@ -129,9 +129,9 @@ router.put('/order', async (req, res) => {
 
 router.delete('/order', (req, res) => {
   const { id } = req.body;
-  console.log(id);
+  // console.log(id);
   req.session.cart = req.session.cart.filter((el) => el !== id);
-  console.log(req.session.cart);
+  // console.log(req.session.cart);
   res.render('cart', { session: req.session });
 });
 
