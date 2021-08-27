@@ -1,12 +1,14 @@
 // const e = require('express');
 const express = require('express');
 // const { Json } = require('sequelize/types/lib/utils');
-// const { UserCard } = require('../db/models');
+const { UserCard } = require('../db/models');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('cart/index');
+  const { cart } = req.session;
+  console.log(cart);
+  res.render('cart/index', { session: req.session });
 });
 
 router.put('/', async (req, res) => {
@@ -17,6 +19,7 @@ router.put('/', async (req, res) => {
     if (!req.session.cart) {
       req.session.cart = [];
       req.session.cart.push(userCardId);
+
       res.status(200).send({ number: req.session.cart.length });
     } else {
       req.session.cart.push(userCardId);
