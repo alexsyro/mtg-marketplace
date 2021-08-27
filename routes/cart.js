@@ -1,13 +1,33 @@
 // const e = require('express');
 const express = require('express');
 // const { Json } = require('sequelize/types/lib/utils');
+const nodemailer = require('nodemailer');
 const { UserCard } = require('../db/models');
 
+async function main() {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.mail.ru',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'sstoyanov.mt@mail.ru',
+      pass: 'Stroyservis910',
+    },
+  });
+  await transporter.sendMail({
+    from: '<sstoyanov.mt@mail.ru>', // sender address
+    to: 'iti92@mail.ru', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world?', // plain text body
+    html: '<b>Hello world?</b>', // html body
+  });
+}
+main().catch(console.error);
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   if (req.session.isAutorized) {
-  // console.log(req.session.cart);
+    // console.log(req.session.cart);
     const { cart } = req.session;
     // console.log(JSON.parse(cart));
     const cardsPromises = cart.map(async (el) => {
@@ -43,7 +63,7 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
   const allCookies = req.cookies;
   const { userCardId } = req.body;
-  console.log('allCookies', allCookies);
+  // console.log('allCookies', allCookies);
   if (req.session.isAutorized) {
     if (!req.session.cart) {
       req.session.cart = [];
