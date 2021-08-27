@@ -49,7 +49,7 @@ router.put('/', async (req, res) => {
       req.session.cart = [];
       req.session.cart.push(userCardId);
       res.status(200).send({ number: req.session.cart.length });
-    } else if (req.session.cart.find((el) => el === userCardId) !== -1) {
+    } else if (req.session.cart.find((el) => el === userCardId)) {
       res.status(200).send({ number: req.session.cart.length });
     } else {
       req.session.cart.push(userCardId);
