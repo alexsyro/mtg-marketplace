@@ -67,8 +67,12 @@ router.get('/cards', async (req, res) => {
     if (req.session.cart) {
       const cart = req.session.cart.length;
       res.render('cards/index', { cart, fullProduct, session: req.session });
+    } else if (req.cookies.cart) {
+      const cartArr = JSON.parse(req.cookies.cart);
+      const cart = cartArr.length;
+      res.render('cards/index', { cart, fullProduct, session: req.session });
     } else {
-      res.render('cards/index', { fullProduct, session: req.session });
+      res.render('cards/index');
     }
   } catch (error) {
     console.log(error);
