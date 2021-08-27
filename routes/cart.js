@@ -3,7 +3,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const { UserCard } = require('../db/models');
 
-async function main() {
+async function sendDataToMail(orderedCards, email) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
     port: 465,
@@ -15,13 +15,13 @@ async function main() {
   });
   await transporter.sendMail({
     from: '<sstoyanov.mt@mail.ru>', // sender address
-    to: 'iti92@mail.ru', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world?', // plain text body
-    html: '<b>Hello world?</b>', // html body
+    to: `${email}`, // list of receivers
+    subject: 'Заказ Magic карт', // Subject line
+    text: `Вы заказали следующие карты:
+        ${orderedCards.join(',')}`, // plain text body
+    html: `<b>Вы заказали следующие карты: ${orderedCards.join(',')}</b>`, // html body
   });
 }
-main().catch(console.error);
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -109,14 +109,18 @@ router.put('/order', async (req, res) => {
             id: element,
           },
         });
-        console.log('CAAAAARD', card);
+        // console.log('CAAAAARD', card);
         card.status = 'sold';
         cards.push(card.CardName);
         card.save();
-        req.session.cart.splice(i, 1);
-        i = 0;
+        // req.session.cart.splice(i, 1);
+        // i = 0;
       }
     }
+    console.log('CARDS', cards);
+    console.log('EMAIL', req.session.user.email);
+    sendDataToMail(cards, req.session.user.email);
+    req.session.cart = [];
     res.render('cart/complete', { cards, session: req.session });
   } else {
     res.render('users/login', { session: req.session });
