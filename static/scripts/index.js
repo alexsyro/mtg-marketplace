@@ -36,7 +36,7 @@ document.addEventListener('click', async (e) => {
   }
 
   if (e.target.id === 'searchBtn') {
-    const CardName = document.getElementById('cardNameInput').value || '*';
+    const CardName = document.getElementById('cardNameInput').value || '.';
     const CardType = document.getElementById('cardType').value;
     const quality = document.getElementById('cardQuality').value;
     const isFoil = document.getElementById('cardFoil').value;

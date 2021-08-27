@@ -26,9 +26,17 @@ router.get('/cards/new', (req, res) => {
 
 router.get('/search', async (req, res) => {
   console.log('QUERY::::', req.query);
-
-  const cards = await UserCard.findAll({ where: req.query });
-  res.render('cards/index', { cards, session: req.session });
+  const { CardName, CardType, quality, isFoil, city } = req.query;
+  const fullProduct = await UserCard.findAll({
+    where: {
+      CardName: { [Op.iRegexp]: CardName },
+      CardType: { [Op.iRegexp]: CardType },
+      quality: { [Op.iRegexp]: quality },
+      isFoil: Boolean(isFoil),
+      city: { [Op.iRegexp]: city },
+    },
+  });
+  res.render('cards/search', { fullProduct, session: req.session });
 });
 
 // Shows all cards on sale
@@ -57,7 +65,14 @@ router.get('/cards', async (req, res) => {
       img: cards[index].img,
       city: prod.city,
     }));
-    res.render('cards/index', { fullProduct, session: req.session });
+    const cities = [];
+    fullProduct.forEach((prod) => {
+      if (!cities.includes(prod.city)) {
+        cities.push(prod.city);
+      }
+    });
+    console.log(cities);
+    res.render('cards/index', { cities, fullProduct, session: req.session });
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';

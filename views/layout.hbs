@@ -24,7 +24,7 @@
         <div id='search-div'>
         <input id='cardNameInput' type='search' name='search' placeholder='Название карты' />
         <select id='cardType'>
-          <option value='*' selected>Тип карты</option>
+          <option value='.' selected>Тип карты</option>
           <option value='Земли'>Земли</option>
           <option value='Существа'>Существа</option>
           <option value='Волшебство'>Волшебство</option>
@@ -33,7 +33,7 @@
           <option value='Артефакт'>Артефакт</option>
         </select>
         <select id='cardQuality'>
-          <option value='*' selected>Качество</option>
+          <option value='.' selected>Качество</option>
           <option value='GM'>GM</option>
           <option value='NM'>NM</option>
           <option value='SP'>SP</option>
@@ -43,14 +43,14 @@
           <option value='DM'>DM</option>
         </select>
         <select id='cardFoil'>
-          <option value='*' selected>Фольгированная</option>
+          <option value='' selected>Фольгированная</option>
           <option value='true'>Да</option>
-          <option value='false'>Нет</option>
+          <option value=''>Нет</option>
         </select>
         <select id='townSelect'>
-          <option value='*' selected>Город</option>
-          {{#each cards}}
-          <option value={{this.city}}>{{this.city}}</option>
+          <option value='.' selected>Город</option>
+          {{#each cities}}
+          <option value={{this}}>{{this}}</option>
           {{/each}}
         </select>
         <button id='searchBtn'>Поиск</button>
