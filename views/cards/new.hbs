@@ -1,10 +1,11 @@
 <form class='new-card' action='/api/cards/' method='post' enctype='multipart/form-data'>
   <div class='inside-form-container'>
-    <input type='file' name='card'/>
+    <input id="fileAdd" type='file' name='card'/>
   </div>
   <div class='inside-form-container'>
     <p>Название карты</p>
-    <input type='text' name='name' placeholder='Введите название карты' />
+    <input id="nameCard" type='text' name='name' placeholder='Введите название карты' />
+    <p>Цена карты</p>
     <input type='number' name='price' placeholder='Введите цену' />
   </div>
   <div class='inside-form-container'>
@@ -21,7 +22,7 @@
 
   <div class='inside-form-container'>
     <p>Качество карты</p>
-    <select name='quality'>
+    <select id="selectQual" name='quality'>
       <option value='GM' selected>GM</option>
       <option value='NM'>NM</option>
       <option value='SP'>SP</option>
@@ -37,5 +38,5 @@
     <input type='checkbox' id='foiled-card' name='isFoil'/>
   </div>
 
-  <button class='submit-btn' type='submit'>Добавить</button>
+  <button id="newCardBtn" class='submit-btn' type='submit'>Добавить</button>
 </form>

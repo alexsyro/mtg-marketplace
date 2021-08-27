@@ -43,4 +43,10 @@ document.addEventListener('click', async (e) => {
     const city = document.getElementById('townSelect').value;
     window.location = `/api/search?CardName=${CardName}&CardType=${CardType}&quality=${quality}&isFoil=${isFoil}&city=${city}`;
   }
+  
+  if (e.target.id === 'profileBtn') {
+    const response = await fetch('/api/profile');
+    const data = await response.text();
+    document.body.innerHTML = data;
+  }
 });
