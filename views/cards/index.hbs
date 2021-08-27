@@ -1,9 +1,11 @@
-<div id="card-container">
-  {{#each cards}}
-  <div class="card-div">
-    <img class="cards" src={{this.img}}>
-    <a class="card-name" href="/cards/{{this.id}}">{{this.name}}</a>
-    <p class="card-price">{{this.price}}</p>
-  </div>
+<div id='card-container'>
+  {{#each fullProduct}}
+    <div class='card-div'>
+      <a class='card-name' href='/api/cards/{{this.id}}'>
+        <img class='cards' src={{this.img}} />
+      </a>
+      <p>{{this.name}}</p>
+      {{!-- <p class="card-price">{{this.price}}</p> --}}
+    </div>
   {{/each}}
 </div>

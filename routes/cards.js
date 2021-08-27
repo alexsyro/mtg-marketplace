@@ -1,7 +1,4 @@
 const express = require('express');
-// подключаем мультер
-const multer = require('multer');
-const upload = require('../app.js')
 
 const router = express.Router();
 
