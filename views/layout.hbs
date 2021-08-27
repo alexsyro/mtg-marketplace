@@ -54,7 +54,9 @@
             <button id='loginBtn'>Login</button>
             <button id='regBtn'>Registration</button>
           {{/if}}
-            <input id='cart' type='submit' value='Корзина' />
+          <form action="/cart" >
+            <input id='cart' type='submit' value='КОРЗИНА {{cart}}' />
+          </form>
         </div>
       </div>
 
