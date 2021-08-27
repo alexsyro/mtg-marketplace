@@ -1,6 +1,27 @@
 const express = require('express');
+// const { Json } = require('sequelize/types/lib/utils');
+const nodemailer = require('nodemailer');
 const { UserCard } = require('../db/models');
 
+async function sendDataToMail(orderedCards, email) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.mail.ru',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'sstoyanov.mt@mail.ru',
+      pass: 'Stroyservis910',
+    },
+  });
+  await transporter.sendMail({
+    from: '<sstoyanov.mt@mail.ru>', // sender address
+    to: `${email}`, // list of receivers
+    subject: 'Заказ Magic карт', // Subject line
+    text: `Вы заказали следующие карты:
+        ${orderedCards.join(',')}`, // plain text body
+    html: `<b>Вы заказали следующие карты: ${orderedCards.join(',')}</b>`, // html body
+  });
+}
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -41,7 +62,7 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
   const allCookies = req.cookies;
   const { userCardId } = req.body;
-  console.log('allCookies', allCookies);
+  // console.log('allCookies', allCookies);
   if (req.session.isAutorized) {
     if (!req.session.cart) {
       req.session.cart = [];
@@ -88,14 +109,18 @@ router.put('/order', async (req, res) => {
             id: element,
           },
         });
-        console.log('CAAAAARD', card);
+        // console.log('CAAAAARD', card);
         card.status = 'sold';
         cards.push(card.CardName);
         card.save();
-        req.session.cart.splice(i, 1);
-        i = 0;
+        // req.session.cart.splice(i, 1);
+        // i = 0;
       }
     }
+    console.log('CARDS', cards);
+    console.log('EMAIL', req.session.user.email);
+    sendDataToMail(cards, req.session.user.email);
+    req.session.cart = [];
     res.render('cart/complete', { cards, session: req.session });
   } else {
     res.render('users/login', { session: req.session });

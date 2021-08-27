@@ -72,14 +72,51 @@ button {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  width: 80%;
+  width: 30%;
+  height: 28em;
+  margin: 2em auto 0;
+  background: rgb(0, 0, 0, .7);
+  font-family: 'Pangolin', cursive;
+  font-size: 1em;
+  color:white;
+  
+}
+
+.new-card input{
+  font-family: 'Pangolin', cursive;
+  font-size: 1em;
+  text-align: center;
+}
+
+#fileAdd {
+  text-align: center;
+  margin-left: 8em;
+}
+
+.new-card p {
+  text-align: center;
+}
+
+.new-card div {
+  margin: 0;
+  padding: 0;
+}
+
+#selectQual {
+  margin-left: 2em;
 }
 
 p {
   margin: 0;
   padding: 0;
+}
+
+#nameCard {
+  margin-bottom: 1.5em;
+
+
 }
 
 .inside-form-container {
@@ -89,6 +126,10 @@ p {
 
 .submit-btn {
   margin-top: 1.5em;
+}
+
+#newCardBtn {
+  margin-top:0;
 }
 
 #card-container {
