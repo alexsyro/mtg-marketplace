@@ -5,8 +5,9 @@ body {
 }
 
 .banner {
-  width: 7em;
-  height: 7em;
+  width: 5em;
+  height: 5em;
+  margin-left: 1em;
 }
 header {
   width: 100%;
@@ -26,6 +27,8 @@ header {
   justify-content: space-between;
   align-items: center;
   transition: 0.2s opacity linear;
+
+  height: 7em;
 }
 
 #upper-header:hover {
@@ -36,8 +39,29 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: cadetblue;
-  height: 10%;
+  height: 2em;
+    
+}
+
+#search-div input, select, option, button {
+  font-family: 'Pangolin', cursive;
+  font-size: 1em;
+}
+
+#profile {
+  display: flex;
+  height: 2em;
+  margin-right: 1em;
+}
+
+#addCardBtn{
+  background: #d73b1f;
+  border: 1px solid #d6874c;
+  margin-left: 0.5em;
+}
+#cart {
+  font-family: 'Pangolin', cursive;
+  font-size: 1em;
 }
 
 /* new card add  */
@@ -146,3 +170,36 @@ th {
   border: 1px solid white;
   text-align: center;
 }
+
+/* login form */
+ .form-style {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 30%;
+   height: 20em;
+   min-height: 20em;
+   margin: 2em auto 0;
+   background: rgb(0, 0, 0, .7);
+
+ }
+ 
+ .form-input {
+   margin: 0.7em;
+   width: 20em;
+   height: 3em;
+   font-family: 'Pangolin', cursive;
+   font-size: 1em;
+ }
+
+ .form-btn {
+   width: 10em;
+   height: 2em;
+   margin-top: 1em;
+   cursor: pointer;
+ }
+
+ #regFormId {
+   height: 30em;
+ }
