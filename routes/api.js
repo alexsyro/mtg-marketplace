@@ -61,7 +61,7 @@ router.get('/cards', async (req, res) => {
       isFoil: prod.isFoil,
       quality: prod.quality,
       price: prod.price,
-      name: cards[index].name,
+      name: prod.CardName,
       img: cards[index].img,
     }));
     res.render('cards/index', { fullProduct, session: req.session });
@@ -75,7 +75,9 @@ router.get('/cards', async (req, res) => {
 // Add new card
 router.post('/cards', upload.single('card'), async (req, res) => {
   console.log(req.body);
-  const { name, type, quality, isFoil, price } = req.body;
+  const {
+    name, type, quality, isFoil, price,
+  } = req.body;
   const img = `/uploads/${req.file.originalname}`;
   const card = {
     name,
@@ -84,9 +86,11 @@ router.post('/cards', upload.single('card'), async (req, res) => {
   };
 
   try {
+    console.log('USER:', req.session.user);
     const [cardEntry] = await Card.findOrCreate({ where: { ...card }, defaults: card });
-    const product = await UserCard.create({
+    await UserCard.create({
       CardId: cardEntry.id,
+      CardName: cardEntry.name,
       UserLogin: req.session.user.login,
       city: req.session.user.city,
       quality,
@@ -118,13 +122,16 @@ router.post('/users/new', async (req, res) => {
       city,
       phone,
     };
-    const [user, isNew] = await User.findOrCreate({
+    const [fullUser, isNew] = await User.findOrCreate({
       where: {
         [Op.or]: [{ login }, { email }],
       },
       defaults: inputUser,
     });
     if (isNew) {
+      const removeProperty = (prop) => ({ [prop]: _, ...rest }) => rest;
+      const removePassword = removeProperty('password');
+      const user = removePassword(fullUser);
       req.session.user = user;
       req.session.isAutorized = true;
       res.render('users/profile', { user, session: req.session });
@@ -146,28 +153,32 @@ router.post('/login', async (req, res) => {
   const { emailLogin, password } = req.body;
   console.log('BODY:', req.body);
   try {
-    const user = await User.findOne({
+    const userEntry = await User.findOne({
       where: {
         [Op.or]: [{ email: emailLogin }, { login: emailLogin }],
       },
     });
-    if (user) {
-      const isCorrectPass = await bcrypt.compare(password, user.password);
+    if (userEntry) {
+      const isCorrectPass = await bcrypt.compare(password, userEntry.password);
       console.log('is correctpass:', isCorrectPass);
       if (isCorrectPass) {
         req.session.isAutorized = true;
+        const removeProperty = (prop) => ({ [prop]: _, ...rest }) => rest;
+        const removePassword = removeProperty('password');
+        const user = removePassword(userEntry);
         req.session.user = user;
         if (req.cookies.cart) {
           req.session.cart = req.cookies.cart;
-          const cartIndex = req.cookies.findIndex((el) => el.cart)
+          const cartIndex = req.cookies.findIndex((el) => el.cart);
           req.cookies.splice(cartIndex, 1);
         }
-        return res.render('users/profile', { session: req.session });
+        res.render('users/profile', { session: req.session });
       }
+    } else {
+      // show that user or password is not unique
+      req.session.isAutorized = false;
+      res.json({ message: 'Логин, пароль или почта не найдены' });
     }
-    // show that user or password is not unique
-    req.session.isAutorized = false;
-    res.json({ message: 'Логин, пароль или почта не найдены' });
   } catch (error) {
     const message = 'Нет связи с БД, не удалось создать запись';
     res.status(500).render('users/error', { error, message, session: req.session });

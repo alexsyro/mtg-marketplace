@@ -2,10 +2,9 @@
   {{#each fullProduct}}
     <div class='card-div'>
       <a class='card-name' href='/api/cards/{{this.id}}'>
-        <img class='cards' src={{this.img}} />
+        <img class='cards' src="{{this.img}}" />
       </a>
       <p>{{this.name}}</p>
-      {{!-- <p class="card-price">{{this.price}}</p> --}}
     </div>
   {{/each}}
 </div>

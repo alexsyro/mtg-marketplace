@@ -28,7 +28,7 @@ header {
 #search-div {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   background-color: cadetblue;
 }
 
