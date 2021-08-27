@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserCard.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       CardId: {
         field: 'card_id',
         type: DataTypes.INTEGER,
@@ -37,6 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
+      },
+      isFoil: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      quality: {
+        allowNull: false,
+        type: DataTypes.TEXT,
       },
       price: {
         allowNull: false,

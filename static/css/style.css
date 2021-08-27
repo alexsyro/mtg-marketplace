@@ -1,6 +1,21 @@
+body {
+  background-color: #212121;
+  background-image: url('/img/banner.jpg');
+  margin: 0px;
+}
+
 .banner {
   width: 200px;
   height: 100px;
+}
+header {
+  width: 100%;
+  left: 0;
+  top: 0;
+  margin: 0px;
+  padding: 0px;
+  position: sticky;
+  z-index: 100;
 }
 
 #upper-header {
@@ -40,4 +55,86 @@ p {
 
 .submit-btn {
   margin-top: 1.5em;
+}
+
+#card-container {
+  margin: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards {
+  opacity: 100%;
+  border-radius: 5%;
+  width: 260px;
+  height: 400px;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-div {
+  opacity: 95%;
+  border: 2px solid rgb(134, 134, 134);
+  border-radius: 5%;
+  background-color: rgb(19, 18, 18);
+  font-weight: bolder;
+  color: white;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*cards/display.hbs  */
+.single-card-container {
+  background-color: black;
+  color: white;
+  width: 40%;
+  height: auto;
+  margin: 0 auto 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border: 0.2em solid rgb(255, 255, 255);
+}
+
+.seller-container {
+  background-color: black;
+  color: white;
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.2em solid rgb(255, 255, 255);
+}
+
+.card-sellers {
+  /* border: 1px solid white; */
+  width: 50%;
+  background-color: black;
+  color: white;
+  opacity: 90%;
+}
+td,
+tr,
+th {
+  border: 1px solid white;
+  text-align: center;
 }

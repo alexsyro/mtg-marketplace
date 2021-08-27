@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const multer = require('multer')
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/cart');
@@ -21,20 +22,25 @@ app.use(express.json());
 
 // Static
 app.use(express.static(path.join(__dirname, 'static')));
-
 // Cookier
 app.use(cookieParser());
 
-let imageStorage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, path.join(__dirname, 'uploads'));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + path.extname(file.originalname));
-  },
-});
+// Session
 
-let upload = multer({imageStorage: imageStorage});
+const sessionConfig = {
+  store: new FileStore(),
+  name: 'user_sid',
+  secret: 'pamagiti',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 86400 * 12,
+    httpOnly: true,
+  },
+};
+
+// session use
+app.use(session(sessionConfig));
 
 app.get('/', (req, res) => {
   res.redirect('/api/cards');
@@ -49,7 +55,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  // destroy session
+  req.session.destroy();
+  res.clearCookie();
   // clear cookie
   res.redirect('/cards');
 });
@@ -63,5 +70,3 @@ app.use('/api', apiRouter);
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
-
-module.exports = upload;

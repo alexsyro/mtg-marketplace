@@ -5,6 +5,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <link rel="stylesheet" href="/css/style.css">
     <script src="/scripts/cards.js" defer></script>
+    <script src="/scripts/cart.js" defer></script>
     <script src="/scripts/index.js" defer></script>
     <script src="/scripts/login.js" defer></script>
     <script src="/scripts/registration.js" defer></script>
@@ -15,22 +16,52 @@
     <header>
       <div id='upper-header'>
         <div id='banner'>
-          <img class="banner" src='/img/banner.jpg' />
+          <img class='banner' src='/img/banner.jpg' />
         </div>
         <div id='profile'>
-          {{#if isAuthorized}}
+          {{#if session.isAutorized}}
             <button id='profileBtn'>Profile</button>
             <button id='logoutBtn'>Logout</button>
           {{else}}
             <button id='loginBtn'>Login</button>
             <button id='regBtn'>Registration</button>
           {{/if}}
+            <input id='cart' type='submit' value='Корзина' />
         </div>
       </div>
+
       <div id='search-div'>
-        <input id="searchInput" type="search" name="search" placeholder="Enter a card name">
-        <button id="searchBtn">Search</button>
+        <input id='searchInput' type='search' name='search' placeholder='Название карты' />
+        <select name='type'>
+          <option value='None' selected>Тип карты</option>
+          <option value='Земли'>Земли</option>
+          <option value='Существа'>Существа</option>
+          <option value='Волшебство'>Волшебство</option>
+          <option value='Мгновенное заклинание'>Мгновенное заклинание</option>
+          <option value='Чары'>Чары</option>
+          <option value='Артефакт'>Артефакт</option>
+        </select>
+        <select name='quality'>
+          <option value='None' selected>Качество</option>
+          <option value='GM'>GM</option>
+          <option value='NM'>NM</option>
+          <option value='SP'>SP</option>
+          <option value='MP'>MP</option>
+          <option value='PL'>PL</option>
+          <option value='HP'>HP</option>
+          <option value='DM'>DM</option>
+        </select>
+        <select name='isFoil'>
+          <option value='None' selected>Фольгированная</option>
+          <option value='true'>Да</option>
+          <option value='false'>Нет</option>
+        </select>
+        <button id='searchBtn'>Поиск</button>
+
       </div>
+      {{#if session.isAutorized}}
+        <button id='addCardBtn'>Выставить карту на продажу</button>
+      {{/if}}
     </header>
     {{{body}}}
   </body>

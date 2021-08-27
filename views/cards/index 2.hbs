@@ -1,0 +1,10 @@
+<div id='card-container'>
+  {{#each fullProduct}}
+    <div class='card-div'>
+      <a class='card-name' href='/api/cards/{{this.id}}'>
+        <img class='cards' src="{{this.img}}" />
+      </a>
+      <p>{{this.name}}</p>
+    </div>
+  {{/each}}
+</div>

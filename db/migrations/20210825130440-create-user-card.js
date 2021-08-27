@@ -37,6 +37,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      isFoil: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      quality: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
       status: {
         allowNull: false,
         type: Sequelize.TEXT,

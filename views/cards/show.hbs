@@ -1,0 +1,41 @@
+<div class='card-info'>
+  <div id='card-container'>
+    <div class='card-div'>
+      <img class='cards' src='{{card.img}}' />
+      <p>{{card.name}}</p>
+      <p>Тип карты: {{card.type}}</p>
+    </div>
+  </div>
+  <table class='card-sellers'>
+    <tr>
+      <th>Продавец</th>
+      <th>Цена</th>
+      <th>Состояние</th>
+      <th>Фольгированная</th>
+      <th>Город</th>
+      <th>В корзину</th>
+    </tr>
+    {{#each sellers}}
+      <tr>
+        <td>
+          {{this.UserLogin}}
+        </td>
+        <td>
+          {{this.price}}
+        </td>
+        <td>
+          {{this.quality}}
+        </td>
+        <td>
+          {{this.isFoil}}
+        </td>
+        <td>
+          {{this.city}}
+        </td>
+        <td>
+          <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+</div>
