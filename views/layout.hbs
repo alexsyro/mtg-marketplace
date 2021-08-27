@@ -3,6 +3,9 @@
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/scripts/cards.js" defer></script>
     <script src="/scripts/cart.js" defer></script>
@@ -45,6 +48,10 @@
           <option value='false'>Нет</option>
         </select>
         <button id='searchBtn'>Поиск</button>
+         {{#if session.isAutorized}}
+        <button id='addCardBtn'>Выставить карту на продажу</button>
+      {{/if}}
+
       </div>
         <div id='profile'>
           {{#if session.isAutorized}}
@@ -54,16 +61,13 @@
             <button id='loginBtn'>Login</button>
             <button id='regBtn'>Registration</button>
           {{/if}}
-          <form action="/cart" >
-            <input id='cart' type='submit' value='КОРЗИНА {{cart}}' />
-          </form>
+            <input id='cart' type='submit' value='Корзина' />
+
+     
         </div>
       </div>
 
       
-      {{#if session.isAutorized}}
-        <button id='addCardBtn'>Выставить карту на продажу</button>
-      {{/if}}
     </header>
     {{{body}}}
   </body>
