@@ -30,7 +30,7 @@ document.addEventListener('click', async (e) => {
   }
 
   if (e.target.id === 'addCardBtn') {
-    const response = await fetch('/api/cards/new');
+    const response = await fetch('/cards/new');
     const data = await response.text();
     document.body.innerHTML = data;
   }
