@@ -4,11 +4,17 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
+        primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      fullName: {
+        field: 'full_name',
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       login: {
         type: Sequelize.TEXT,
-        primaryKey: true,
+        allowNull: false,
       },
       email: {
         allowNull: false,
@@ -24,6 +30,7 @@ module.exports = {
       },
       phone: {
         type: Sequelize.TEXT,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

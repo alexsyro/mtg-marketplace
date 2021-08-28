@@ -3,68 +3,69 @@
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/scripts/cart.js" defer></script>
-    <script src="/scripts/index.js" defer></script>
-    <script src="/scripts/users.js" defer></script>
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link href='https://fonts.googleapis.com/css2?family=Pangolin&display=swap' rel='stylesheet' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <script src='/scripts/cart.js' defer></script>
+    <script src='/scripts/index.js' defer></script>
+    <script src='/scripts/users.js' defer></script>
     <title>MTG-Marketplace</title>
   </head>
   <body>
     <header>
       <div id='upper-header'>
         <div id='banner'>
-          <a href='/'><img class='banner' src='/img/banner.png' /></a>
+          <a href='/'><img class='banner' src='/img/site/banner.png' /></a>
+          <p style='color: white;'>Magick the gathering Market</p>
         </div>
         <div id='search-div'>
-        <input id='cardNameInput' type='search' name='search' placeholder='Название карты' />
-        <select id='cardType'>
-          <option value='.' selected>Тип карты</option>
-          <option value='Земли'>Земли</option>
-          <option value='Существа'>Существа</option>
-          <option value='Волшебство'>Волшебство</option>
-          <option value='Мгновенное заклинание'>Мгновенное заклинание</option>
-          <option value='Чары'>Чары</option>
-          <option value='Артефакт'>Артефакт</option>
-        </select>
-        <select id='cardQuality'>
-          <option value='.' selected>Качество</option>
-          <option value='GM'>GM</option>
-          <option value='NM'>NM</option>
-          <option value='SP'>SP</option>
-          <option value='MP'>MP</option>
-          <option value='PL'>PL</option>
-          <option value='HP'>HP</option>
-          <option value='DM'>DM</option>
-        </select>
-        <select id='cardFoil'>
-          <option value='' selected>Фольгированная</option>
-          <option value='true'>Да</option>
-          <option value=''>Нет</option>
-        </select>
-        <select id='townSelect'>
-          <option value='.' selected>Город</option>
-          {{#each cities}}
-          <option value={{this}}>{{this}}</option>
-          {{/each}}
-        </select>
-        <button id='searchBtn'>Поиск</button>
-         {{#if session.isAutorized}}
-        <button id='addCardBtn'>Выставить карту на продажу</button>
-      {{/if}}
-      </div>
+          <input id='cardNameInput' type='search' name='search' placeholder='Название карты или описание' />
+          <select id='cardType'>
+            <option value='.' selected>Тип карты</option>
+            <option value='Земля'>Земля</option>
+            <option value='Существо'>Существо</option>
+            <option value='Волшебство'>Волшебство</option>
+            <option value='Мгновенное заклинание'>Мгновенное заклинание</option>
+            <option value='Чары'>Чары</option>
+            <option value='Артефакт'>Артефакт</option>
+          </select>
+          <select id='cardQuality'>
+            <option value='.' selected>Качество</option>
+            <option value='GM'>GM</option>
+            <option value='NM'>NM</option>
+            <option value='SP'>SP</option>
+            <option value='MP'>MP</option>
+            <option value='PL'>PL</option>
+            <option value='HP'>HP</option>
+            <option value='DM'>DM</option>
+          </select>
+          <select id='cardFoil'>
+            <option value='' selected>Фольгированная</option>
+            <option value='true'>Да</option>
+            <option value=''>Нет</option>
+          </select>
+          <select id='townSelect'>
+            <option value='.' selected>Город</option>
+            {{#each cities}}
+              <option value={{this}}>{{this}}</option>
+            {{/each}}
+          </select>
+          <button id='searchBtn'>Поиск</button>
+          {{#if session.isAutorized}}
+            <button id='addCardBtn'>Выставить карту на продажу</button>
+          {{/if}}
+        </div>
         <div id='profile'>
           {{#if session.isAutorized}}
-          
+
             <button id='profileBtn'>Profile</button>
             <button id='logoutBtn'>Logout</button>
           {{else}}
             <button id='loginBtn'>Login</button>
             <button id='regBtn'>Registration</button>
           {{/if}}
-            <input id='cart' type='submit' value='Корзина' />
+          <input id='cart' type='submit' value='Корзина' />
         </div>
       </div>
     </header>

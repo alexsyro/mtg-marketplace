@@ -1,20 +1,27 @@
-<div class="profile-container">
-  <h2 class="profile-name">{{session.user.login}}</h2>
-  <p class="profile-city">{{session.user.city}}</p>
+<div class='profile-container'>
+  <h2 class='profile-name'>Имя: {{session.user.fullName}}</h2>
+  <p class='profile-city'>Email: {{session.user.email}}</p>
+  <p class='profile-name'>Логин: {{session.user.login}}</p>
+  <p class='profile-city'>Город: {{session.user.city}}</p>
 
+  <h2>Карты, выставленные на продажу:</h2>
   <table class='card-sellers'>
     <tr>
+      <th></th>
       <th>Название</th>
       <th>Цена</th>
       <th>Состояние</th>
       <th>Фольгированная</th>
     </tr>
-  {{#each cards}}
-   <tr>
+    {{#each orders}}
+      <tr>
         <td>
-          <a class='card-name' href='/api/cards/{{this.CardId}}'>
-            {{this.CardName}}
+          <a class='card-name' href='/cards/{{this.Card.id}}'>
+            <img class='card-name' src='{{this.Card.img}}' , style='width: 60px; height:100px;' />
           </a>
+        </td>
+        <td>
+          {{this.Card.name}}
         </td>
         <td>
           {{this.price}}
@@ -26,9 +33,7 @@
           {{this.isFoil}}
         </td>
       </tr>
-  {{/each }}
+    {{/each}}
   </table>
 
 </div>
-
-

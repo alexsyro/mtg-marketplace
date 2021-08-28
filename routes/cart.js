@@ -1,7 +1,34 @@
 const express = require('express');
 // const { Json } = require('sequelize/types/lib/utils');
 const nodemailer = require('nodemailer');
-const { UserCard } = require('../db/models');
+const { Order, Card, User } = require('../db/models');
+
+function isAutorized(req, res, next) {
+  if (req.session && req.session.isAutorized) {
+    next();
+  } else {
+    res.render('users/login');
+  }
+}
+
+async function getOrdersFromCart(cart) {
+  let cartArray;
+  if (typeof cart === 'string') {
+    cartArray = cart.match(/\d+/gi);
+  } else {
+    cartArray = cart;
+  }
+  const orders = cartArray.map(async (orderId) => {
+    const order = await Order.findOne({
+      where: {
+        id: Number(orderId),
+      },
+      include: [Card, User],
+    });
+    return order;
+  });
+  return Promise.all(orders);
+}
 
 async function sendDataToMail(orderedCards, email) {
   const transporter = nodemailer.createTransport({
@@ -9,12 +36,12 @@ async function sendDataToMail(orderedCards, email) {
     port: 465,
     secure: true,
     auth: {
-      user: 'sstoyanov.mt@mail.ru',
-      pass: 'Stroyservis910',
+      user: process.env.SMTP_EMAIL_LOGIN,
+      pass: process.env.SMTP_EMAIL_PASSWORD,
     },
   });
   await transporter.sendMail({
-    from: '<sstoyanov.mt@mail.ru>', // sender address
+    from: 'MTG-Market', // sender address
     to: `${email}`, // list of receivers
     subject: 'Заказ Magic карт', // Subject line
     text: `Вы заказали следующие карты:
@@ -26,34 +53,12 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   if (req.session.isAutorized) {
-    // console.log(req.session.cart);
     const { cart } = req.session;
-    // console.log(JSON.parse(cart));
-    const cardsPromises = cart.map(async (el) => {
-      const card = await UserCard.findOne({
-        where: {
-          id: Number(el),
-        },
-      });
-      return card;
-    });
-    const cards = await Promise.all(cardsPromises);
-    // console.log('!!!!!!!', cards);
-    res.render('cart/index', { cards });
+    const orderInCart = await getOrdersFromCart(cart);
+    res.render('cart/index', { orderInCart });
   } else if (req.cookies.cart) {
-    // console.log(req.session.cart);
-    const cart = JSON.parse(req.cookies.cart);
-    const cardsPromises = cart.map(async (el) => {
-      const card = await UserCard.findOne({
-        where: {
-          id: Number(el),
-        },
-      });
-      return card;
-    });
-    const cards = await Promise.all(cardsPromises);
-    // console.log('!!!!!!!', cards);
-    res.render('cart/index', { cards });
+    const orderInCart = await getOrdersFromCart(req.cookies.cart);
+    res.render('cart/index', { orderInCart });
   } else {
     res.render('cart/index');
   }
@@ -61,77 +66,53 @@ router.get('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   const allCookies = req.cookies;
-  const { userCardId } = req.body;
-  // console.log('allCookies', allCookies);
+  const { orderId } = req.body;
   if (req.session.isAutorized) {
     if (!req.session.cart) {
       req.session.cart = [];
-      req.session.cart.push(userCardId);
-      res.status(200).send({ number: req.session.cart.length });
-    } else if (req.session.cart.find((el) => el === userCardId)) {
-      res.status(200).send({ number: req.session.cart.length });
+      req.session.cart.push(orderId);
+      res.status(200).json({ cardIsEmpty: false });
     } else {
-      req.session.cart.push(userCardId);
-      res.status(200).send({ number: req.session.cart.length });
+      if (req.session.cart.include(orderId) === false) {
+        req.session.cart.push(orderId);
+      }
+      res.status(200).json({ cardIsEmpty: false });
     }
-    console.log('!!!!!!!!!!', req.session.cart);
   } else if (!allCookies.cart) {
     const arrOfCart = [];
-    arrOfCart.push(userCardId);
-    // console.log(arrOfCart);
-    // console.log('arrOfCart', JSON.stringify(arrOfCart));
+    arrOfCart.push(orderId);
     res.cookie('cart', JSON.stringify(arrOfCart));
-    res.status(200).send({ number: arrOfCart.length });
+    res.status(200).json({ cardIsEmpty: false });
   } else {
     const arrOfCart = await JSON.parse(allCookies.cart);
-    if (arrOfCart.find((el) => el === userCardId)) {
+    if (arrOfCart.find((el) => el === orderId)) {
       res.cookie('cart', JSON.stringify(arrOfCart));
-      res.status(200).send({ number: arrOfCart.length });
+      res.status(200).json({ cardIsEmpty: false });
     } else {
-      // console.log('arrOfCart!!!!!!!!!!!!!!', arrOfCart);
-      arrOfCart.push(userCardId);
-      // console.log('arrOfCart', JSON.stringify(arrOfCart));
+      arrOfCart.push(orderId);
       res.cookie('cart', JSON.stringify(arrOfCart));
-      res.status(200).send({ number: arrOfCart.length });
+      res.status(200).json({ cardIsEmpty: false });
     }
   }
 });
 
-router.put('/order', async (req, res) => {
-  if (req.session.isAutorized) {
-    // console.log(req.session.cart);
-    const cards = [];
-    for (let i = 0; i < req.session.cart.length; i += 1) {
-      if (req.session.cart.length) {
-        const element = Number(req.session.cart[i]);
-        const card = await UserCard.findOne({
-          where: {
-            id: element,
-          },
-        });
-        // console.log('CAAAAARD', card);
-        card.status = 'sold';
-        cards.push(card.CardName);
-        card.save();
-        // req.session.cart.splice(i, 1);
-        // i = 0;
-      }
-    }
-    // console.log('CARDS', cards);
-    // console.log('EMAIL', req.session.user.email);
-    sendDataToMail(cards, req.session.user.email);
-    req.session.cart = [];
-    res.render('cart/complete', { cards, session: req.session });
-  } else {
-    res.render('users/login', { session: req.session });
-  }
+router.put('/order', isAutorized, async (req, res) => {
+  // console.log(req.session.cart);
+  const cards = [];
+  const orderInCart = await getOrdersFromCart(req.session.cart);
+  orderInCart.forEach((order) => {
+    order.status = 'SOLD';
+    cards.push({ Название: order.Card.name, Количество: order.number });
+    order.save();
+  });
+  sendDataToMail(cards, req.session.user.email);
+  req.session.cart = [];
+  res.render('cart/complete', { orderInCart, session: req.session });
 });
 
 router.delete('/order', (req, res) => {
   const { id } = req.body;
-  // console.log(id);
   req.session.cart = req.session.cart.filter((el) => el !== id);
-  // console.log(req.session.cart);
   res.render('cart', { session: req.session });
 });
 

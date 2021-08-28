@@ -1,27 +1,21 @@
 const { Model } = require('sequelize');
+const UserModel = require('./user');
+const CardModel = require('./card');
 
 module.exports = (sequelize, DataTypes) => {
-  class UserCard extends Model {
+  class Order extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate({ User, Card }) {
-      Card.belongsToMany(User, { through: UserCard });
-      User.belongsToMany(Card, { through: UserCard });
-      // UserCard.belongsTo(User, { onUpdate: 'cascade', onDelete: 'cascade' });
-      // UserCard.belongsTo(Card, { onUpdate: 'cascade', onDelete: 'cascade' });
+      Order.belongsTo(Card);
+      Order.belongsTo(User);
     }
   }
-  UserCard.init(
+  Order.init(
     {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
       CardId: {
         field: 'card_id',
         type: DataTypes.INTEGER,
@@ -33,23 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      CardName: {
-        field: 'card_name',
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      CardType: {
-        field: 'card_type',
-        allowNull: false,
-        type: DataTypes.TEXT,
-      },
-      UserLogin: {
-        field: 'user_login',
+      UserId: {
+        field: 'user_id',
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'User',
-          key: 'login',
+          key: 'id',
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
@@ -66,8 +50,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      city: {
-        type: DataTypes.TEXT,
+      number: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
       },
       status: {
         type: DataTypes.TEXT,
@@ -83,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'UserCard',
+      modelName: 'Order',
     }
   );
-  return UserCard;
+  return Order;
 };

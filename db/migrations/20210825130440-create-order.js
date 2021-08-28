@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UserCards', {
+    await queryInterface.createTable('Orders', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,23 +18,13 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      CardName: {
-        field: 'card_name',
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      CardType: {
-        field: 'card_type',
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      UserLogin: {
-        field: 'user_login',
-        type: Sequelize.TEXT,
+      UserId: {
+        field: 'user_id',
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'login',
+          key: 'id',
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
@@ -43,9 +33,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      city: {
+      number: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
       },
       isFoil: {
         type: Sequelize.BOOLEAN,
@@ -70,6 +60,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UserCards');
+    await queryInterface.dropTable('Orders');
   },
 };

@@ -1,3 +1,4 @@
+const REGEXP_FILE_EXTENSION = /.*([.]{1}[jpegtgabmppng]{3,4})/gi;
 const equalsDict = {
   а: 'a',
   б: 'b',
@@ -36,15 +37,26 @@ const equalsDict = {
 };
 
 class Text {
+  // Translitting incoming text
   static transliterate(text) {
-    const transliterateText = text.split('').map((letter) => {
-      const lttr = letter.toLowerCase();
-      if (lttr in equalsDict) {
-        return equalsDict[lttr];
-      }
-      return lttr;
-    });
+    const transliterateText = text
+      .trim()
+      .split('')
+      .map((letter) => {
+        const lttr = letter.toLowerCase();
+        if (lttr in equalsDict) {
+          return equalsDict[lttr];
+        }
+        return lttr;
+      });
     return transliterateText.join('');
+  }
+
+  // Making path to file with translited name.
+  static MakePath(name, fileName) {
+    const transliteName = this.transliterate(name);
+    const extension = fileName.replace(REGEXP_FILE_EXTENSION, '$1');
+    return transliteName + extension;
   }
 }
 

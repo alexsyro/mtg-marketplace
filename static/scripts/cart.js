@@ -1,14 +1,14 @@
 document.addEventListener('click', async (e) => {
   if (e.target.className === 'buyBtn') {
     e.preventDefault();
-    const userCardId = e.target.id;
-    // console.log(userCardId);
+    const orderId = e.target.id;
+    // console.log(orderId);
     const response = await fetch('/cart', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userCardId }),
+      body: JSON.stringify({ orderId }),
     });
     const buyingCardsNumber = await response.json();
     // console.log(buyingCardsNumber);

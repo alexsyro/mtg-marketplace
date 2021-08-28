@@ -1,7 +1,7 @@
 <div id="cart-container">
 <h1 id="carts-title">Оформление заказа</h1>
 
-{{#if cards}}
+{{#if orderInCart}}
   <h3 id="carts-list">Список карт:</h3>
   <table class='card-sellers'>
     <tr>
@@ -12,13 +12,13 @@
       <th>Фольгированная</th>
       <th>Город</th>
     </tr>
-    {{#each cards}}
+    {{#each orderInCart}}
       <tr>
         <td>
-          {{this.CardName}}
+          {{this.Card.name}}
         </td>
         <td>
-          {{this.UserLogin}}
+          {{this.User.fullName}}
         </td>
         <td>
           {{this.price}}
@@ -30,7 +30,7 @@
           {{this.isFoil}}
         </td>
         <td>
-          {{this.city}}
+          {{this.User.city}}
         </td>
         <td><button id={{this.id}} class='removeBtn'>Удалить</button></td>
       </tr>

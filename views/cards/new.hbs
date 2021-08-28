@@ -1,28 +1,37 @@
-<form class='new-card' action='/api/cards/' method='post' enctype='multipart/form-data'>
-  <div class='inside-form-container'>
-    <input id="fileAdd" type='file' name='card'/>
-  </div>
+<form id='new-card-form' class='new-card' action='/api/cards/' method='post' enctype='multipart/form-data'>
   <div class='inside-form-container'>
     <p>Название карты</p>
-    <input id="nameCard" type='text' name='name' placeholder='Введите название карты' />
-    <p>Цена карты</p>
-    <input type='number' name='price' placeholder='Введите цену' />
+    <input id='nameCard' type='text' name='name' placeholder='Введите название карты' />
+    <p>Описание карты</p>
+    <textarea id='cardDescr' name='description' form='new-card-form'></textarea>
   </div>
   <div class='inside-form-container'>
     <p>Тип карты</p>
-    <select name='type'>
-      <option value='Чары' selected>Чары</option>
-      <option value='Земли'>Земли</option>
-      <option value='Существа'>Существа</option>
-      <option value='Волшебство'>Волшебство</option>
-      <option value='Мгновенное заклинание'>Мгновенное заклинание</option>
-      <option value='Артефакт'>Артефакт</option>
-    </select>
+    <input list="type-list" id="cardType" name="type" />
+    <datalist id='type-list'>
+      {{#each cardTypes}}
+      <option value='{{this}}'></option>
+      {{/each}}
+    </datalist>
+    <p>Подтип карты</p>
+    <input id='cardSubtype' type='text' name='subtype' placeholder='Введите название карты' />
+    <p>Редкость</p>
+    <input list="rarity-list" id="cardRarity" name="rarity" />
+    <datalist id='rarity-list'>
+      <option value='Обычная' selected>
+      <option value='Необычная' style="color: blue;">
+      <option value='Редкая'>
+      <option value='Мифическая'>
+      <option value='Промо'>
+      <option value='Токен'>
+    </datalist>
   </div>
 
   <div class='inside-form-container'>
+    <label for='foiled-card'>Фольгированная</label>
+    <input type='checkbox' id='foiled-card' name='isFoil' />
     <p>Качество карты</p>
-    <select id="selectQual" name='quality'>
+    <select id='selectQual' name='quality'>
       <option value='GM' selected>GM</option>
       <option value='NM'>NM</option>
       <option value='SP'>SP</option>
@@ -34,9 +43,14 @@
   </div>
 
   <div class='inside-form-container'>
-    <label for='foiled-card'>Фольгированная</label>
-    <input type='checkbox' id='foiled-card' name='isFoil'/>
+    <p>Цена карты</p>
+    <input type='number' name='price' placeholder='Введите цену' />
+    <p>Количество карт</p>
+    <input type='number' name='number' placeholder='Введите кол-во карт' />
   </div>
+  <div class='inside-form-container'>
 
-  <button id="newCardBtn" class='submit-btn' type='submit'>Добавить</button>
+    <input id='fileAdd' type='file' name='card' required/>
+  </div>
+  <button id='newCardBtn' class='submit-btn' type='submit'>Добавить</button>
 </form>

@@ -36,14 +36,14 @@ document.addEventListener('click', async (e) => {
   }
 
   if (e.target.id === 'searchBtn') {
-    const CardName = document.getElementById('cardNameInput').value || '.';
-    const CardType = document.getElementById('cardType').value;
+    const name = document.getElementById('cardNameInput').value || '.';
+    const type = document.getElementById('cardType').value;
     const quality = document.getElementById('cardQuality').value;
     const isFoil = document.getElementById('cardFoil').value;
     const city = document.getElementById('townSelect').value;
-    window.location = `/api/search?CardName=${CardName}&CardType=${CardType}&quality=${quality}&isFoil=${isFoil}&city=${city}`;
+    window.location = `/api/search?name=${name}&type=${type}&quality=${quality}&isFoil=${isFoil}&city=${city}`;
   }
-  
+
   if (e.target.id === 'profileBtn') {
     const response = await fetch('/api/profile');
     const data = await response.text();

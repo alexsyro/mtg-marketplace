@@ -1,9 +1,45 @@
 <div class='card-info'>
   <div id='card-container'>
     <div class='card-div'>
-      <img class='cards' src='{{card.img}}' />
-      <p>{{card.name}}</p>
-      <p>Тип карты: {{card.type}}</p>
+      <div class='card-description-container'>
+        <div>
+          <img class='cards' src='{{card.img}}' />
+        </div>
+        <div>
+          <table>
+            {{#if card.name}}
+              <tr>
+                <td>Название:</td>
+                <td>{{card.name}}</td>
+              </tr>
+            {{/if}}
+            {{#if card.type}}
+              <tr>
+                <td>Тип карты:</td>
+                <td>{{card.type}}</td>
+              </tr>
+            {{/if}}
+            {{#if card.subtype}}
+              <tr>
+                <td>Подтип:</td>
+                <td>{{card.subtype}}</td>
+              </tr>
+            {{/if}}
+            {{#if card.description}}
+              <tr>
+                <th>Описание:</th>
+                <td>{{card.description}}</td>
+              </tr>
+            {{/if}}
+            {{#if card.rarity}}
+              <tr>
+                <th>Редкость:</th>
+                <td>{{card.rarity}}</td>
+              </tr>
+            {{/if}}
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <table class='card-sellers'>
@@ -18,7 +54,7 @@
     {{#each sellers}}
       <tr>
         <td>
-          {{this.UserLogin}}
+          {{this.User.fullName}}
         </td>
         <td>
           {{this.price}}
@@ -30,7 +66,7 @@
           {{this.isFoil}}
         </td>
         <td>
-          {{this.city}}
+          {{this.User.city}}
         </td>
         <td>
           <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>

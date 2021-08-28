@@ -15,6 +15,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      subtype: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      rarity: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
       img: {
         allowNull: false,
         type: Sequelize.TEXT,

@@ -13,8 +13,6 @@ dotenv.config();
 
 const app = express();
 
-// const PORT = 3000;
-
 // подключаем HBS
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -58,9 +56,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+  // clear cookie & sessions
   req.session.destroy();
   res.clearCookie();
-  // clear cookie
+
   res.redirect('/cards');
 });
 

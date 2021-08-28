@@ -9,15 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Card, UserCard }) {
-      User.belongsToMany(Card, { through: UserCard });
-      // User.hasMany(UserCard, { onUpdate: 'cascade', onDelete: 'cascade' });
+    static associate({ Order }) {
+      User.hasOne(Order);
     }
   }
   User.init({
+    fullName: {
+      field: 'full_name',
+      allowNull: true,
+      type: DataTypes.INTEGER,
+    },
     login: {
       type: DataTypes.TEXT,
-      primaryKey: true,
     },
     email: {
       type: DataTypes.TEXT,
@@ -33,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type: DataTypes.TEXT,
+      allowNull: true,
     },
   }, {
     sequelize,

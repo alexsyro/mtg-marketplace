@@ -1,14 +1,17 @@
 body {
   background-color: #212121;
-  background-image: url('/img/banner.jpg');
+  background-image: url('/img/site/background.jpg');
   margin: 0px;
 }
 
 .banner {
+  display: flex;
+  flex-direction: column;
   width: 5em;
   height: 5em;
   margin-left: 1em;
 }
+
 header {
   width: 100%;
   left: 0;
@@ -75,7 +78,7 @@ button {
   justify-content: space-around;
   align-items: center;
   width: 30%;
-  height: 28em;
+  height: auto;
   margin: 2em auto 0;
   background: rgb(0, 0, 0, 0.7);
   font-family: 'Pangolin', cursive;
@@ -91,7 +94,10 @@ button {
 
 #fileAdd {
   text-align: center;
-  margin-left: 8em;
+  margin-left: 0em;
+  margin-top: 2em;
+  background-color: red;
+  width: 250px;
 }
 
 .new-card p {
@@ -108,7 +114,7 @@ button {
 }
 
 p {
-  margin: 0;
+  margin: 5;
   padding: 0;
 }
 
@@ -117,7 +123,7 @@ p {
 }
 
 .inside-form-container {
-  margin-top: 1.5em;
+  margin-top: 2em;
   text-align: left;
 }
 
@@ -126,7 +132,12 @@ p {
 }
 
 #newCardBtn {
-  margin-top: 0;
+  border-radius: 5%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color:rgb(52, 226, 125);
+  width: 200px;
+  height: 40px;
 }
 
 #card-container {
@@ -155,6 +166,29 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.card-description-container{
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+.card-description-container div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card-description-container table {
+  text-align: left;
+  color: white;
+  border: none;
+  border-color: none;
+  width: 350px;
+}
+.card-description-container img {
+  border: 1px solid white;
 }
 
 .card-div {
@@ -187,7 +221,7 @@ p {
 .seller-container {
   background-color: black;
   color: white;
-  width: 70%;
+  width: 90%;
   height: auto;
   margin: 0 auto;
   display: flex;
@@ -198,17 +232,17 @@ p {
 }
 
 .card-sellers {
+  padding: 5px;
+  min-width: 1000px;
+  text-align: center;
   /* border: 1px solid white; */
-  width: 50%;
   background-color: black;
   color: white;
   opacity: 90%;
 }
-td,
-tr,
-th {
+
+.card-sellers td {
   border: 1px solid white;
-  text-align: center;
 }
 
 /* login form */
