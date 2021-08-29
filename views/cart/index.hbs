@@ -13,6 +13,8 @@
         <th>Фольгированная</th>
         <th>Город</th>
         <th>Кол-во</th>
+        <th>Максимум</th>
+        <th></th>
       </tr>
       {{#each orders}}
         <tr>
@@ -39,9 +41,20 @@
           <td>
             {{this.User.city}}
           </td>
-          <td>
-            <input type='number' name='number' value={{this.number}} style='width: 60px;' />
-          </td>
+        <td>
+          <input
+            id='items-number-{{this.id}}'
+            class='number-of-cards'
+            type='number'
+            name='number'
+            value='1'
+            max={{this.number}}
+            style='width: 60px;'
+          />
+        </td>
+        <td>
+          {{this.number}}
+        </td>
           <td><button id={{this.id}} class='removeBtn'>Удалить</button></td>
         </tr>
       {{/each}}

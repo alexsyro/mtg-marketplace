@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const { Op } = require('sequelize');
 const Text = require('../Tools/Text');
-const { User, Card, Order } = require('../db/models');
+const { User, Card, Order, sequelize } = require('../db/models');
 
 const { Router } = express;
 
@@ -26,15 +26,21 @@ const upload = multer({ storage: imageStorage });
 
 // Search cards by filter
 router.get('/search', async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : 0;
   const { name, type, quality, isFoil, city } = req.query;
   const fullProduct = await Order.findAll({
     where: {
+      UserId: {
+        [Op.not]: userId,
+      },
       quality: { [Op.iRegexp]: quality },
       isFoil: Boolean(isFoil),
+      status: 'FOR SALE',
     },
     include: [
       {
         model: Card,
+        as: 'Card',
         where: {
           [Op.or]: [
             {
@@ -57,23 +63,28 @@ router.get('/search', async (req, res) => {
         },
       },
     ],
+    order: [sequelize.literal('"Card".name')],
   });
   res.render('cards/search', { fullProduct, session: req.session });
 });
 
 // Shows all cards on sale
 router.get('/cards', async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : 0;
   try {
     const orders = await Order.findAll({
       where: {
-        status: 'for sale',
+        UserId: {
+          [Op.not]: userId,
+        },
+        status: 'FOR SALE',
       },
       include: {
         model: Card,
       },
     });
     const cities = new Set(Array.from(orders).map((order) => order.city));
-    res.render('cards/index', { cities, orders, session: req.session });
+    res.render('cards/gallery', { cities, orders, session: req.session });
   } catch (error) {
     console.log(error);
     const message = 'Нет связи с БД, не удалось создать запись';
@@ -83,6 +94,7 @@ router.get('/cards', async (req, res) => {
 
 // Show selected card
 router.get('/cards/:cardId', async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : 0;
   const { cardId } = req.params;
   const card = await Card.findOne({
     where: {
@@ -91,6 +103,9 @@ router.get('/cards/:cardId', async (req, res) => {
   });
   const sellers = await Order.findAll({
     where: {
+      UserId: {
+        [Op.not]: userId,
+      },
       CardId: cardId,
     },
     include: {
@@ -121,7 +136,7 @@ router.post('/cards', upload.single('card'), async (req, res) => {
       price,
       quality,
       isFoil: isFoil || false,
-      status: 'for sale',
+      status: 'FOR SALE',
     });
     res.redirect('/api/cards');
   } catch (error) {
@@ -229,7 +244,6 @@ router.get('/profile', async (req, res) => {
     },
     include: Card,
   });
-  console.log(orders);
   res.render('users/profile', { orders, session: req.session });
 });
 

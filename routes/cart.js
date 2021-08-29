@@ -78,6 +78,7 @@ router.put('/', async (req, res) => {
   // Когда авторизовваемся, нужно копировать содержимое корзины в сессию и удалять куку
   const { orderId } = req.body;
   if (req.session.isAutorized) {
+    res.clearCookie('cart');
     // Если корзина ещё не создана, то создаём и храним в сессии
     if (!req.session.cart || !req.session.cart.length) {
       req.session.cart = [];
@@ -111,30 +112,52 @@ router.put('/', async (req, res) => {
 
 // Оформление заказа. В случае, если не авторизован, кидает на страницу авторизации
 router.put('/order', isAutorized, async (req, res) => {
+  const numberOfCards = req.body.number;
   const cards = [];
   const orderInCart = await getOrdersFromCart(req.session.cart);
-  orderInCart.forEach((order) => {
-    order.status = 'SOLD';
-    cards.push({ Название: order.Card.name, Количество: order.number });
+  orderInCart.forEach((order, index) => {
+    order.number -= Number(numberOfCards[index]);
+    if (order.number === 0) {
+      order.status = 'SOLD';
+    }
     order.save();
+    cards.push({ name: order.Card.name, number: numberOfCards[index] });
   });
   sendDataToMail(cards, req.session.user.email);
   req.session.cart = [];
-  res.render('cart/complete', { orders: orderInCart, session: req.session });
+  res.render('cart/complete', { cards, session: req.session });
 });
 
 // Удаление товаров из корзины
 router.delete('/order', async (req, res) => {
+  let cart;
+  let isCookieCart;
   const { id } = req.body;
   if (req.session.isAutorized) {
-    req.session.cart = req.session.cart.filter((order) => order !== id);
-    res.redirect('cart/index');
+    res.clearCookie('cart');
+    isCookieCart = false;
+    cart = req.session.cart;
   } else {
-    let cartContent = await JSON.parse(req.cookies.cart);
-    cartContent = cartContent.filter((order) => order !== id);
-    res.cookie('cart', JSON.stringify(cartContent));
-    res.redirect('cart/index');
+    isCookieCart = true;
+    cart = await JSON.parse(res.cookies.cart);
   }
+  console.log(':::::::BEFORE::::::::::', cart, id, typeof id, typeof cart, req.session.cart);
+  cart = cart.filter((order) => {
+    console.log(order, typeof order, order === id);
+    if (order !== id) {
+      return order;
+    }
+  });
+  console.log(':::::::AFTER::::::::::', cart, id);
+  if (isCookieCart) {
+    res.cookie('cart', JSON.stringify(cart));
+  } else {
+    console.log('SESS AFTER', req.session.cart);
+    req.session.cart = cart;
+    console.log('SESS AFTER', req.session.cart);
+  }
+
+  res.redirect('cart/index');
 });
 
 module.exports = router;

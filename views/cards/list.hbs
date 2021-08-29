@@ -1,17 +1,15 @@
-<div class='card-info'>
+<div id='card-container'>
   <table class='card-sellers'>
     <tr>
       <th></th>
       <th>Название</th>
-      <th>Продавец</th>
       <th>Цена</th>
       <th>Состояние</th>
       <th>Фольгированная</th>
-      <th>Город</th>
       <th>Максимум</th>
       <th>В корзину</th>
     </tr>
-    {{#each fullProduct}}
+    {{#each orders}}
       <tr>
         <td>
           <a class='card-name' href='/cards/{{this.Card.id}}'>
@@ -19,12 +17,7 @@
           </a>
         </td>
         <td>
-          <a class='card-name' href='/api/cards/{{this.CardId}}'>
-            {{this.Card.name}}
-          </a>
-        </td>
-        <td>
-          {{this.User.login}}
+          {{this.Card.name}}
         </td>
         <td>
           {{this.price}}
@@ -36,9 +29,6 @@
           {{this.isFoil}}
         </td>
         <td>
-          {{this.User.city}}
-        </td>
-        <td>
           {{this.number}}
         </td>
         <td>
@@ -48,3 +38,4 @@
     {{/each}}
   </table>
 </div>
+

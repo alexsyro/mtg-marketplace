@@ -4,7 +4,7 @@
 
 <p>Вы заказали следующие карты:</p>
 {{#each cards}}
-<p>{{this}}</p>
+<p>Название: {{this.name}}, Количество: {{this.number}}</p>
 {{/each}}
 
 <p>{{session.user.login}}, мы отправили заказ вам на почту {{session.user.email}}.

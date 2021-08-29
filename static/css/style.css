@@ -1,4 +1,7 @@
 body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   background-color: #212121;
   background-image: url('/img/site/background.jpg');
   margin: 0px;
@@ -23,8 +26,7 @@ header {
 }
 
 #upper-header {
-  opacity: 0.6;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -35,7 +37,7 @@ header {
 }
 
 #upper-header:hover {
-  opacity: 0.9;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 #search-div {
@@ -152,6 +154,8 @@ p {
 }
 
 #card-container {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5%;
   margin: 30px;
   display: flex;
   flex-wrap: wrap;
@@ -159,6 +163,10 @@ p {
 }
 
 .card-info {
+  border-radius: 1%;
+  margin-top: 10px;
+  width: 55%;
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -166,18 +174,11 @@ p {
 }
 
 .cards {
-  opacity: 100%;
   border-radius: 5%;
   width: 260px;
   height: 400px;
 }
 
-.card-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 .card-description-container {
   padding: 5px;
   display: flex;
@@ -203,10 +204,9 @@ p {
 }
 
 .card-div {
-  opacity: 95%;
+  background-color: rgba(0, 0, 10, 0.5);
   border: 2px solid rgb(134, 134, 134);
   border-radius: 5%;
-  background-color: rgb(19, 18, 18);
   font-weight: bolder;
   color: white;
   margin: 10px;
@@ -243,13 +243,13 @@ p {
 }
 
 .card-sellers {
+  border-radius: 1%;
   padding: 5px;
   min-width: 1000px;
   text-align: center;
-  /* border: 1px solid white; */
-  background-color: black;
+  border: 2px solid rgba(200, 200, 200, 0.2);
   color: white;
-  opacity: 90%;
+  background-color: rgba(0, 0, 10, 0.9);
 }
 
 .card-sellers td {
@@ -290,7 +290,7 @@ p {
 
 /* cart */
 #cart-container {
-  width: 50%;
+  width: 60%;
   margin: 5em auto 0;
   display: flex;
   flex-direction: column;
@@ -332,7 +332,7 @@ p {
 
 .profile-container {
   padding: 2em;
-  width: 50%;
+  width: 55%;
   margin: 5em auto 0;
   color: white;
   align-items: center;
