@@ -1,43 +1,53 @@
-<div id="cart-container">
-<h1 id="carts-title">Оформление заказа</h1>
+<div id='cart-container'>
+  <h1 id='carts-title'>Оформление заказа</h1>
 
-{{#if orderInCart}}
-  <h3 id="carts-list">Список карт:</h3>
-  <table class='card-sellers'>
-    <tr>
-      <th>Название</th>
-      <th>Продавец</th>
-      <th>Цена</th>
-      <th>Состояние</th>
-      <th>Фольгированная</th>
-      <th>Город</th>
-    </tr>
-    {{#each orderInCart}}
+  {{#if orders}}
+    <h3 id='carts-list'>Список карт:</h3>
+    <table class='card-sellers'>
       <tr>
-        <td>
-          {{this.Card.name}}
-        </td>
-        <td>
-          {{this.User.fullName}}
-        </td>
-        <td>
-          {{this.price}}
-        </td>
-        <td>
-          {{this.quality}}
-        </td>
-        <td>
-          {{this.isFoil}}
-        </td>
-        <td>
-          {{this.User.city}}
-        </td>
-        <td><button id={{this.id}} class='removeBtn'>Удалить</button></td>
+        <th></th>
+        <th>Название</th>
+        <th>Продавец</th>
+        <th>Цена</th>
+        <th>Состояние</th>
+        <th>Фольгированная</th>
+        <th>Город</th>
+        <th>Кол-во</th>
       </tr>
-    {{/each}}
-  </table>
-  <input id='OrderBtn' type='submit' value='Оформить заказ' />
-{{else}}
-  <h1>Корзина пуста</h1>
-{{/if}}
-</div> 
+      {{#each orders}}
+        <tr>
+          <td>
+            <a class='card-name' href='/cards/{{this.Card.id}}'>
+              <img class='card-name' src='{{this.Card.img}}' , style='width: 60px; height:100px;' />
+            </a>
+          </td>
+          <td>
+            {{this.Card.name}}
+          </td>
+          <td>
+            {{this.User.fullName}}
+          </td>
+          <td>
+            {{this.price}}
+          </td>
+          <td>
+            {{this.quality}}
+          </td>
+          <td>
+            {{this.isFoil}}
+          </td>
+          <td>
+            {{this.User.city}}
+          </td>
+          <td>
+            <input type='number' name='number' value={{this.number}} style='width: 60px;' />
+          </td>
+          <td><button id={{this.id}} class='removeBtn'>Удалить</button></td>
+        </tr>
+      {{/each}}
+    </table>
+    <input id='OrderBtn' type='submit' value='Оформить заказ' />
+  {{else}}
+    <h1>Корзина пуста</h1>
+  {{/if}}
+</div>

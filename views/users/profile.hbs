@@ -12,6 +12,7 @@
       <th>Цена</th>
       <th>Состояние</th>
       <th>Фольгированная</th>
+      <th>Кол-во</th>
     </tr>
     {{#each orders}}
       <tr>
@@ -31,6 +32,9 @@
         </td>
         <td>
           {{this.isFoil}}
+        </td>
+        <td>
+          <input type='number' name='number' value={{this.number}} style='width: 60px;' />
         </td>
       </tr>
     {{/each}}

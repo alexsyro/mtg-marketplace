@@ -57,10 +57,14 @@ app.get('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
   // clear cookie & sessions
-  req.session.destroy();
-  res.clearCookie();
-
-  res.redirect('/cards');
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.clearCookie('user_sid');
+      res.redirect('/cards');
+    }
+  });
 });
 
 // Routes

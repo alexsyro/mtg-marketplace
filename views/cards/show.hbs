@@ -49,6 +49,7 @@
       <th>Состояние</th>
       <th>Фольгированная</th>
       <th>Город</th>
+      <th>Кол-во</th>
       <th>В корзину</th>
     </tr>
     {{#each sellers}}
@@ -67,6 +68,9 @@
         </td>
         <td>
           {{this.User.city}}
+        </td>
+        <td>
+          <input type='number' name='number' value={{this.number}} style='width: 60px;' />
         </td>
         <td>
           <button id={{this.id}} class='buyBtn' type='click'>Добавить в корзину</button>

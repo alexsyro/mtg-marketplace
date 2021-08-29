@@ -18,12 +18,11 @@ const imageStorage = multer.diskStorage({
 });
 const upload = multer({ storage: imageStorage });
 
-
-router.get('/cards/new', async (req, res) => {
-  const cards = await Card.findAll({ raw: true });
-  const cardTypes = new Set(Array.from(cards).map((card) => card.type));
-  res.render('cards/new', { cardTypes, session: req.session });
-});
+// router.get('/cards/new', async (req, res) => {
+//   const cards = await Card.findAll({ raw: true });
+//   const cardTypes = new Set(Array.from(cards).map((card) => card.type));
+//   res.render('cards/new', { cardTypes, session: req.session });
+// });
 
 // Search cards by filter
 router.get('/search', async (req, res) => {

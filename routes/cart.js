@@ -1,8 +1,11 @@
 const express = require('express');
-// const { Json } = require('sequelize/types/lib/utils');
 const nodemailer = require('nodemailer');
 const { Order, Card, User } = require('../db/models');
 
+const router = express.Router();
+
+// Middleware которая проверяет, является ли пользователь авторизованным.
+// Если нет - кидает на страницу авторизации
 function isAutorized(req, res, next) {
   if (req.session && req.session.isAutorized) {
     next();
@@ -11,12 +14,13 @@ function isAutorized(req, res, next) {
   }
 }
 
+// Создаёт список заказов на основе содержимого корзины
 async function getOrdersFromCart(cart) {
   let cartArray;
-  if (typeof cart === 'string') {
-    cartArray = cart.match(/\d+/gi);
-  } else {
+  if (cart instanceof Array) {
     cartArray = cart;
+  } else {
+    cartArray = cart.match(/\d+/gi);
   }
   const orders = cartArray.map(async (orderId) => {
     const order = await Order.findOne({
@@ -30,6 +34,7 @@ async function getOrdersFromCart(cart) {
   return Promise.all(orders);
 }
 
+// Отправка Email с деталями заказа
 async function sendDataToMail(orderedCards, email) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
@@ -49,55 +54,63 @@ async function sendDataToMail(orderedCards, email) {
     html: `<b>Вы заказали следующие карты: ${orderedCards.join(',')}</b>`, // html body
   });
 }
-const router = express.Router();
 
+// Нажимаем на кнопку корзина
 router.get('/', async (req, res) => {
+  let cart;
   if (req.session.isAutorized) {
-    const { cart } = req.session;
-    const orderInCart = await getOrdersFromCart(cart);
-    res.render('cart/index', { orderInCart });
-  } else if (req.cookies.cart) {
-    const orderInCart = await getOrdersFromCart(req.cookies.cart);
-    res.render('cart/index', { orderInCart });
+    cart = req.session.cart;
   } else {
-    res.render('cart/index');
+    // Проверка, что куки с корзиной в принципе существуют
+    cart = req.cookies.cart ? await JSON.parse(req.cookies.cart) : [];
+  }
+  if (cart && cart.length > 0) {
+    const orderInCart = await getOrdersFromCart(cart);
+    res.render('cart/index', { orders: orderInCart, session: req.session });
+  } else {
+    res.render('cart/index', { session: req.session });
   }
 });
 
+// Помещаем товар в корзину
 router.put('/', async (req, res) => {
-  const allCookies = req.cookies;
+  // TODO: проверять момент перехода между авторизацией и корзиной.
+  // Когда авторизовваемся, нужно копировать содержимое корзины в сессию и удалять куку
   const { orderId } = req.body;
   if (req.session.isAutorized) {
-    if (!req.session.cart) {
+    // Если корзина ещё не создана, то создаём и храним в сессии
+    if (!req.session.cart || !req.session.cart.length) {
       req.session.cart = [];
       req.session.cart.push(orderId);
       res.status(200).json({ cardIsEmpty: false });
     } else {
-      if (req.session.cart.include(orderId) === false) {
+      // Если в корзине уже есть элемент, то мы его не добавляем
+      if (req.session.cart.includes(orderId) === false) {
         req.session.cart.push(orderId);
       }
       res.status(200).json({ cardIsEmpty: false });
     }
-  } else if (!allCookies.cart) {
-    const arrOfCart = [];
-    arrOfCart.push(orderId);
-    res.cookie('cart', JSON.stringify(arrOfCart));
+  } else if (!req.cookies.cart) {
+    // Если корзина ещё не создана, то создаём и храним в cookie
+    const cartContent = [];
+    cartContent.push(orderId);
+    res.cookie('cart', JSON.stringify(cartContent));
     res.status(200).json({ cardIsEmpty: false });
   } else {
-    const arrOfCart = await JSON.parse(allCookies.cart);
-    if (arrOfCart.find((el) => el === orderId)) {
-      res.cookie('cart', JSON.stringify(arrOfCart));
+    // Если создана, то проверяем, если такой элемент уже в корзине и, если нет, то добавляем
+    const cartContent = await JSON.parse(req.cookies.cart);
+    if (cartContent.find((el) => el === orderId)) {
       res.status(200).json({ cardIsEmpty: false });
     } else {
-      arrOfCart.push(orderId);
-      res.cookie('cart', JSON.stringify(arrOfCart));
+      cartContent.push(orderId);
+      res.cookie('cart', JSON.stringify(cartContent));
       res.status(200).json({ cardIsEmpty: false });
     }
   }
 });
 
+// Оформление заказа. В случае, если не авторизован, кидает на страницу авторизации
 router.put('/order', isAutorized, async (req, res) => {
-  // console.log(req.session.cart);
   const cards = [];
   const orderInCart = await getOrdersFromCart(req.session.cart);
   orderInCart.forEach((order) => {
@@ -107,13 +120,21 @@ router.put('/order', isAutorized, async (req, res) => {
   });
   sendDataToMail(cards, req.session.user.email);
   req.session.cart = [];
-  res.render('cart/complete', { orderInCart, session: req.session });
+  res.render('cart/complete', { orders: orderInCart, session: req.session });
 });
 
-router.delete('/order', (req, res) => {
+// Удаление товаров из корзины
+router.delete('/order', async (req, res) => {
   const { id } = req.body;
-  req.session.cart = req.session.cart.filter((el) => el !== id);
-  res.render('cart', { session: req.session });
+  if (req.session.isAutorized) {
+    req.session.cart = req.session.cart.filter((order) => order !== id);
+    res.redirect('cart/index');
+  } else {
+    let cartContent = await JSON.parse(req.cookies.cart);
+    cartContent = cartContent.filter((order) => order !== id);
+    res.cookie('cart', JSON.stringify(cartContent));
+    res.redirect('cart/index');
+  }
 });
 
 module.exports = router;
