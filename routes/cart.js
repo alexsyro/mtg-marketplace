@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
     cart = req.session.cart;
   } else {
     // Проверка, что куки с корзиной в принципе существуют
-    cart = req.cookies.cart ? await JSON.parse(req.cookies.cart) : [];
+    cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
   }
   if (cart && cart.length > 0) {
     const orderInCart = await getOrdersFromCart(cart);
@@ -139,7 +139,7 @@ router.delete('/order', async (req, res) => {
     cart = req.session.cart;
   } else {
     isCookieCart = true;
-    cart = JSON.parse(res.cookies.cart);
+    cart = JSON.parse(req.cookies.cart);
   }
   console.log(':::::::BEFORE::::::::::', cart, id, typeof id, typeof cart, req.session.cart);
   cart = cart.filter((order) => {
@@ -158,7 +158,7 @@ router.delete('/order', async (req, res) => {
     console.log('SESS AFTER', req.session.cart);
   }
 
-  res.redirect('cart/index');
+  res.end();
 });
 
 module.exports = router;
