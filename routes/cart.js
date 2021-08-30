@@ -139,14 +139,15 @@ router.delete('/order', async (req, res) => {
     cart = req.session.cart;
   } else {
     isCookieCart = true;
-    cart = await JSON.parse(res.cookies.cart);
+    cart = JSON.parse(res.cookies.cart);
   }
   console.log(':::::::BEFORE::::::::::', cart, id, typeof id, typeof cart, req.session.cart);
   cart = cart.filter((order) => {
     console.log(order, typeof order, order === id);
     if (order !== id) {
-      return order;
+      return true;
     }
+    return false;
   });
   console.log(':::::::AFTER::::::::::', cart, id);
   if (isCookieCart) {
