@@ -1,24 +1,30 @@
 # Magic: The Gathering
 
-Маркетплейс, где все игроки могут выкладывать свои карточки на продажу. Ну и конечно остальные могут их купить.
-Самое важное - это возможность быстрого поиска по названию и фильтрации по городу, в котором находится продавец.
+A marketplace where all players can list their cards for sale. And of course, others can buy them.
+The most important feature is the ability to quickly search by name and filter by the city where the seller is located.
 
-### Главная страница
+### Main Page
+
 ![](/ReadMe/main.png)
 
-- Регистрация
-- Вход
-- Список всех, доступных для покупки карт
-- Фильтрация карточек по нужным значениям
+- Registration
+- Login
+- List of all cards available for purchase
+- Filtering cards by desired values
 
-### Корзина
+### Cart
+
 ![](/ReadMe/cart.png)
-- Список добавленных в корзину карточек
-- Кнопка "Оформить заказ"
-- При нажатии отправляется email каждому продавцу с информацией о заказчике и карточка помечается как купленная
 
-### Личный кабинет
+- List of cards added to the cart
+- "Checkout" button
+- When clicked, an email is sent to each seller with information about the buyer, and the card is marked as sold
+
+### Personal Account
+
 ![](/ReadMe/add-card.png)
-- Форма добавления карточки на продажу
-- Отправление email покупателю о заключенной сделке
 
+- Form for adding a card for sale
+- Sending an email to the buyer about the completed transaction
+
+If you need anything else, just let me know!
